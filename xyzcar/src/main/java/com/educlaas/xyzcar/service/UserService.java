@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.config.JwtTokenProvider;
-import com.educlaas.xyzcar.dao.Car;
 import com.educlaas.xyzcar.dao.User;
 import com.educlaas.xyzcar.dto.UserDTO;
 import com.educlaas.xyzcar.repository.UserRepository;
