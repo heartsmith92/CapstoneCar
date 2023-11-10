@@ -8,8 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.config.JwtTokenProvider;
-import com.educlaas.xyzcar.dao.User;
 import com.educlaas.xyzcar.dto.UserDTO;
+import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.UserRepository;
 
 @Service
@@ -44,7 +44,7 @@ public class UserService {
         newUser.setPassword(passwordEncoder.encode(user.getPassword())); // Encode the password
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
-        newUser.setProfileImage(user.getProfileImage());
+        newUser.setProfileImgPath(user.getProfileImgPath());
         // Set other user properties as needed
 
         userRepository.save(newUser);

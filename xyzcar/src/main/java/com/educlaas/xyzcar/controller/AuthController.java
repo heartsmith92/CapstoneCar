@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.config.JwtTokenProvider;
-import com.educlaas.xyzcar.dao.User;
 import com.educlaas.xyzcar.dto.UserDTO;
+import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.AuthResponse;
 import com.educlaas.xyzcar.service.UserService;
 
@@ -44,7 +44,7 @@ public class AuthController {
             user.setPassword(userDTO.getPassword()); // Ensure you hash the password before saving
             user.setFirstName(userDTO.getFirstName());
             user.setLastName(userDTO.getLastName());
-            user.setProfileImage(userDTO.getProfileImage());
+            user.setProfileImgPath(userDTO.getProfileImage());
 
             // You may set other user properties here
 
@@ -76,7 +76,7 @@ public class AuthController {
             String token = tokenProvider.generateToken(user.getUsername());
 
             // Create a custom response object to include user details and token
-            AuthResponse authResponse = new AuthResponse(user.getId(), user.getUsername(), user.getFirstName(), user.getLastName(), token, user.getProfileImage());
+            AuthResponse authResponse = new AuthResponse(user.getId(), user.getUsername(), user.getFirstName(), user.getLastName(), token, user.getProfileImgPath());
 
             // Return the custom response object as JSON
             return ResponseEntity.ok(authResponse);

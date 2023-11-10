@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.educlaas.xyzcar.dao.User;
+import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.service.UserService;
 
 @RestController
@@ -51,7 +51,7 @@ public class UserController {
 		updateUser.setUsername(user.getUsername());
 		updateUser.setFirstName(user.getFirstName());
 		updateUser.setLastName(user.getLastName());
-		updateUser.setProfileImage(user.getProfileImage());
+		updateUser.setProfileImgPath(user.getProfileImgPath());
 		
 		postUser(updateUser);
 		
