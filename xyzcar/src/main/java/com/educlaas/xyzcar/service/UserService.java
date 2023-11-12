@@ -24,15 +24,18 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    //Check If username is taken 
     public boolean isUsernameTaken(String username) {
         User user = userRepository.findByUsername(username);
         return user != null;
     }
 
+    //Find User By username
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
+    //New Registration
     public User registerUser(User user) {
         User existingUser = userRepository.findByUsername(user.getUsername());
         if (existingUser != null) {
@@ -57,17 +60,13 @@ public class UserService {
         return newUser;
     }
 
+    //Login Registration 
     public String loginUser(User user) {
         User existingUser = userRepository.findByUsername(user.getUsername());
         if (existingUser == null) {
             throw new RuntimeException("User not found.");
         }
 
-//        // Check if the provided password matches the stored password
-//        if (!passwordEncoder.matches(existingUser.getPassword(), existingUser.getPassword())) {
-//            throw new RuntimeException("Invalid password.");
-//        }
-        
 
         // Check if the provided password matches the stored password
         if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
@@ -80,15 +79,17 @@ public class UserService {
         return tokenProvider.generateToken(existingUser.getUsername());
     }
    
-    
+    //Get All Users
     public List<User> getUser() {
 		return userRepository.findAll();
 	}
     
+    //Save User
     public void postUser(User user){
     	userRepository.save(user);
 	}
     
+    //Find By ID
 	public Optional<User> viewCar(Long userId) {
 		return userRepository.findById(userId);
 	}
