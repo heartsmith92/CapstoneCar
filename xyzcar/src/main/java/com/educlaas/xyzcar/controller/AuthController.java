@@ -38,12 +38,23 @@ public class AuthController {
                 return ResponseEntity.badRequest().body("Username is already taken.");
             }
 
+//            // Create a new user entity and save it to the database
+//            User user = new User();
+//            user.setUsername(userDTO.getUsername());
+//            user.setPassword(userDTO.getPassword()); // Ensure you hash the password before saving
+//            user.setFirstName(userDTO.getFirstName());
+//            user.setLastName(userDTO.getLastName());
+//            user.setProfileImgPath(userDTO.getProfileImage());
             // Create a new user entity and save it to the database
             User user = new User();
             user.setUsername(userDTO.getUsername());
-            user.setPassword(userDTO.getPassword()); // Ensure you hash the password before saving
+            user.setPassword(userDTO.getPassword()); // Hash the password
             user.setFirstName(userDTO.getFirstName());
             user.setLastName(userDTO.getLastName());
+            user.setEmail(userDTO.getEmail());
+            user.setUserType(userDTO.getUserType());
+            user.setUserBio(userDTO.getUserBio());
+            user.setStatus(userDTO.getStatus());
             user.setProfileImgPath(userDTO.getProfileImage());
 
             // You may set other user properties here
@@ -67,8 +78,15 @@ public class AuthController {
                 return ResponseEntity.badRequest().body("User not found.");
             }
 
+//            // Check if the provided password matches the stored password (you should use a password encoder)
+//            if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+//                return ResponseEntity.badRequest().body("Invalid password.");
+//            }
+            
             // Check if the provided password matches the stored password (you should use a password encoder)
             if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+                System.out.println("Provided Password: " + userDTO.getPassword());
+                System.out.println("Stored Password: " + user.getPassword());
                 return ResponseEntity.badRequest().body("Invalid password.");
             }
 
