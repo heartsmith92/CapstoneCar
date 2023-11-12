@@ -71,15 +71,8 @@ public class AuthController {
                 return ResponseEntity.badRequest().body("User not found.");
             }
 
-//            // Check if the provided password matches the stored password (you should use a password encoder)
-//            if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-//                return ResponseEntity.badRequest().body("Invalid password.");
-//            }
-            
             // Check if the provided password matches the stored password (you should use a password encoder)
             if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-                System.out.println("Provided Password: " + userDTO.getPassword());
-                System.out.println("Stored Password: " + user.getPassword());
                 return ResponseEntity.badRequest().body("Invalid password.");
             }
 
