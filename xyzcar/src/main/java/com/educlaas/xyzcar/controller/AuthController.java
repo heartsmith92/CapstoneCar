@@ -38,13 +38,6 @@ public class AuthController {
                 return ResponseEntity.badRequest().body("Username is already taken.");
             }
 
-//            // Create a new user entity and save it to the database
-//            User user = new User();
-//            user.setUsername(userDTO.getUsername());
-//            user.setPassword(userDTO.getPassword()); // Ensure you hash the password before saving
-//            user.setFirstName(userDTO.getFirstName());
-//            user.setLastName(userDTO.getLastName());
-//            user.setProfileImgPath(userDTO.getProfileImage());
             // Create a new user entity and save it to the database
             User user = new User();
             user.setUsername(userDTO.getUsername());
