@@ -6,6 +6,8 @@ import lombok.Data;
 import java.util.Date; // Import java.util.Date
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Data
 public class User {
@@ -48,26 +50,34 @@ public class User {
     private String profileImgPath;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<Community> communities;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<Post> posts;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<LikeEntity> likes;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<Follow> follows;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<Share> shares;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<NotificationLog> notificationLogs;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<CommunityMember> communityMembers;
 }
