@@ -22,7 +22,7 @@ public class CorsConfig {
             		// User
                     .requestMatchers(HttpMethod.GET, "xyz/users").permitAll()
                     .requestMatchers(HttpMethod.PUT, "xyz/users/*").permitAll()
-                    .requestMatchers(HttpMethod.GET, "xyz/users/*").authenticated()
+                    .requestMatchers(HttpMethod.GET, "xyz/users/*").permitAll()
                     
                     // Post
                     .requestMatchers(HttpMethod.GET, "xyz/get/posts", "xyz/get/posts/*").permitAll()
