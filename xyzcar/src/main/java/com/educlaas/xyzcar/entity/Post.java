@@ -3,6 +3,9 @@ package com.educlaas.xyzcar.entity;
 import java.util.Date; // Import java.util.Date
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +26,7 @@ import jakarta.persistence.TemporalType;
 public class Post {
 	
 
-	 @Id
+		@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "postID")
 	    private Long postID;
@@ -49,19 +52,24 @@ public class Post {
 
 	    @ManyToOne
 	    @JoinColumn(name = "FK_userID")
+	    @JsonManagedReference 
 	    private User user;
 
 	    @ManyToOne
 	    @JoinColumn(name = "FK_communityID")
+	    @JsonManagedReference 
 	    private Community community;
 
 	    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	    @JsonBackReference 
 	    private List<Comment> comments;
 
 	    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	    @JsonBackReference 
 	    private List<LikeEntity> likes;
 
 	    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	    @JsonBackReference 
 	    private List<Share> shares;
 	
 

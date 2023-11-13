@@ -2,6 +2,10 @@ package com.educlaas.xyzcar.entity;
 
 import java.util.Date; // Import java.util.Date
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,23 +23,26 @@ import lombok.Data;
 @Table(name = "LikeEntity")
 public class LikeEntity {
 	
-	 @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "likeID")
-    private Long likeID;
+		@Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    @Column(name = "likeID")
+	    private Long likeID;
 
-    @Column(name = "createdDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+	    @Column(name = "createdDate")
+	    @Temporal(TemporalType.TIMESTAMP)
+	    private Date createdDate;
 
-    @Column(name = "status")
-    private Integer status;
+	    @Column(name = "status")
+	    private Integer status;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_userID")
-    private User user;
+	    @ManyToOne
+	    @JoinColumn(name = "FK_userID")
+	    @JsonManagedReference 
+	    private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_postID")
+	    @ManyToOne
+	    @JoinColumn(name = "FK_postID")
+	    @JsonBackReference 
 	    private Post post;
+
 }
