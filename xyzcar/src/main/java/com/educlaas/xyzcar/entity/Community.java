@@ -3,6 +3,9 @@ package com.educlaas.xyzcar.entity;
 import java.util.Date; // Import java.util.Date
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,13 +49,15 @@ public class Community {
 
     @ManyToOne
     @JoinColumn(name = "FK_userID")
+    @JsonManagedReference 
     private User user;
 
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<Post> posts;
 
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
+    @JsonBackReference 
     private List<CommunityMember> communityMembers;
-	
 
 }

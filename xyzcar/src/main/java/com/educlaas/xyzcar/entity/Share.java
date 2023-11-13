@@ -2,6 +2,9 @@ package com.educlaas.xyzcar.entity;
 
 import java.util.Date; // Import java.util.Date
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,23 +23,25 @@ import lombok.Data;
 public class Share {
 	
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "shareID")
-    private Long shareID;
+		@Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    @Column(name = "shareID")
+	    private Long shareID;
 
-    @Column(name = "status")
-    private Integer status;
+	    @Column(name = "status")
+	    private Integer status;
 
-    @Column(name = "createdDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+	    @Column(name = "createdDate")
+	    @Temporal(TemporalType.TIMESTAMP)
+	    private Date createdDate;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_postID")
-    private Post post;
+	    @ManyToOne
+	    @JoinColumn(name = "FK_postID")
+	    @JsonBackReference 
+	    private Post post;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_userID")
-    private User user;
+	    @ManyToOne
+	    @JoinColumn(name = "FK_userID")
+	    @JsonManagedReference 
+	    private User user;
 }

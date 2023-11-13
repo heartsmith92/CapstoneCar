@@ -2,6 +2,8 @@ package com.educlaas.xyzcar.entity;
 
 import java.util.Date; // Import java.util.Date
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +39,6 @@ public class Follow {
 
 	    @ManyToOne
 	    @JoinColumn(name = "FK_userID")
+	    @JsonManagedReference 
 	    private User user;
-
 }
