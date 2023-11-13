@@ -19,12 +19,20 @@ public class CorsConfig {
         	.csrf(csrf -> csrf.disable())
             .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers(HttpMethod.GET, "xyz/cars", "xyz/users").permitAll()
-                    .requestMatchers(HttpMethod.POST, "auth/login", "auth/register").permitAll()
+            		// User
+                    .requestMatchers(HttpMethod.GET, "xyz/users").permitAll()
                     .requestMatchers(HttpMethod.PUT, "xyz/users/*").permitAll()
-                    .requestMatchers(HttpMethod.PUT, "xyz/car/status/*").authenticated()
-                    .requestMatchers(HttpMethod.POST, "xyz/cars").authenticated()
                     .requestMatchers(HttpMethod.GET, "xyz/users/*").authenticated()
+                    
+                    // Post
+                    .requestMatchers(HttpMethod.GET, "xyz/get/posts", "xyz/get/posts/*").permitAll()
+                    .requestMatchers(HttpMethod.POST, "xyz/create/post").permitAll()
+                    .requestMatchers(HttpMethod.PUT, "xyz/put/post/status/{postId}", "xyz/put/post/{postId}").permitAll()
+                    
+                    // Login/ Register
+                    .requestMatchers(HttpMethod.POST, "auth/login", "auth/register").permitAll()
+                    
+                    // All other requests required a authentication check
                     .anyRequest().authenticated())
             		.addFilterBefore(new JwtAuthFilter(), BasicAuthenticationFilter.class);;
         return http.build();
