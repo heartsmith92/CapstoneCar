@@ -29,21 +29,22 @@ public class PostService {
 	 private CommunityRepository communityRepository;
 
 
+	
 	 
-	 public Post createPost(Long userId, CreatePostDTO createPostDTO) {
+	 public Post createPost(Long userId, Long communityId, CreatePostDTO createPostDTO) {
 		    // Step A: Validate user existence
 		    User existingUser = userRepository.findById(userId)
-		            .orElseThrow(() -> new RuntimeException("User not found"));  // You can handle this exception better
+		            .orElseThrow(() -> new RuntimeException("User not found"));
 
 		    // Step B: Retrieve the existing community if available
-		    Community existingCommunity = createPostDTO.getCommunityId() != null ?
-		            communityRepository.findById(createPostDTO.getCommunityId()).orElse(null) : null;
+		    Community existingCommunity = communityId != null ?
+		            communityRepository.findById(communityId).orElse(null) : null;
 
 		    // Step C: Create a new post with the provided data
-		    Post postNew = new Post();  // Create a new Post instance
+		    Post postNew = new Post();
 
 		    // Set attributes from the provided CreatePostDTO object
-		    postNew.setCreatedDate(new Date()); // Set the current date/time
+		    postNew.setCreatedDate(new Date());
 		    postNew.setPostContent(createPostDTO.getPostContent());
 		    postNew.setPostImgPath(createPostDTO.getPostImgPath());
 		    postNew.setPostTitle(createPostDTO.getPostTitle());
@@ -59,6 +60,7 @@ public class PostService {
 
 		    return createdPost;
 		}
+
 
  
 	 
