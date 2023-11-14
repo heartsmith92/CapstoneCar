@@ -28,8 +28,6 @@ public class PostService {
 	 @Autowired
 	 private CommunityRepository communityRepository;
 
-
-	
 	 
 	 public Post createPost(Long userId, Long communityId, CreatePostDTO createPostDTO) {
 		    // Step A: Validate user existence
