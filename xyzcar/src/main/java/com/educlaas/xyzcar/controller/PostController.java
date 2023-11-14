@@ -28,20 +28,20 @@ public class PostController {
 	   @Autowired
 	    private PostService postService;
 	   
+	   
+	   @PostMapping("/createPost/{userId}/{communityId}")
+	   public ResponseEntity<Post> createPost(
+	           @PathVariable Long userId,
+	           @PathVariable(required = false) Long communityId,
+	           @RequestBody CreatePostDTO createPostDTO) {
 
-	   //CreatePostUsingUserID
-	   //It can also accept optional Community ID value 
-	    @PostMapping("/createPost/{userId}")
-	    public ResponseEntity<Post> createPost(
-	            @PathVariable Long userId,
-	            @RequestBody CreatePostDTO createPostDTO) {
+	       // Call the service method to create a new post
+	       Post createdPost = postService.createPost(userId, communityId, createPostDTO);
 
-	        // Call the service method to create a new post
-	        Post createdPost = postService.createPost(userId, createPostDTO);
+	       // Return the created post and a HTTP status code indicating success
+	       return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
+	   }
 
-	        // Return the created post and a HTTP status code indicating success
-	        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
-	    }
 
 	    
 	    //Get All Post
