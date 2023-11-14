@@ -41,7 +41,6 @@ public class UserService {
         if (existingUser != null) {
             throw new RuntimeException("User with this username already exists.");
         }
-
    
         User newUser = new User();
         newUser.setUsername(user.getUsername());
