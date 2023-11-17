@@ -34,4 +34,10 @@ public class ShareService {
     public void deleteShare(Long id) {
         shareRepository.deleteById(id);
     }
+    
+    //function 20 
+    
+    public void sharePost(Long userId , Long postId) {
+    	
+    }
 }
