@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.educlaas.xyzcar.dto.CommentDTO;
 import com.educlaas.xyzcar.entity.Comment;
 import com.educlaas.xyzcar.repository.CommentRepository;
 
@@ -34,4 +35,21 @@ public class CommentService {
     public void deleteComment(Long id) {
         commentRepository.deleteById(id);
     }
+    
+    public void deleteCommentTest(Long id) {
+        
+    }
+    
+    //Function 19
+    public void commentOnPost(Long userId, Long postId , CommentDTO commentDTO) {
+    	
+    	
+    }
+    
+    //Function 29 
+    public void listUserComments(Long userId) {
+    	
+    }
+    
+    
 }
