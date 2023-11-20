@@ -34,4 +34,28 @@ public class FollowService {
     public void deleteFollow(Long id) {
         followRepository.deleteById(id);
     }
+    
+    //Function 9
+    public void listFollowedFriends(Long userId) {}
+    
+    //Function 10
+    public void filterFriendsByStatus(Long userId , int status) {}
+    
+    
+    //Function 11
+    public void searchFriends(String query) {
+    	
+    }
+    
+    //Function 12
+	public void followFriend(Long userId , Long friendId) {
+		
+	}
+	
+	//Function 13
+	public void unfollowFriend(Long userId , Long friendId) {
+		
+	}
+	
+	
 }

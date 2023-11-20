@@ -34,4 +34,14 @@ public class NotificationLogService {
     public void deleteNotificationLog(Long id) {
         notificationLogRepository.deleteById(id);
     }
+    
+    
+    //Function 21 
+    public void createNotificationLog(Long userId, Long postId) {
+    	
+    }
+    
+    
+    
+    
 }

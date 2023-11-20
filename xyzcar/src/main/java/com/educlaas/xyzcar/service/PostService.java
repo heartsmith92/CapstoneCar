@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
+import com.educlaas.xyzcar.dto.PostDTO;
 import com.educlaas.xyzcar.entity.Community;
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.User;
@@ -29,6 +30,7 @@ public class PostService {
 	 private CommunityRepository communityRepository;
 
 	 
+	 //Function 16 //Function 24
 	 public Post createPost(Long userId, Long communityId, CreatePostDTO createPostDTO) {
 		    // Step A: Validate user existence
 		    User existingUser = userRepository.findById(userId)
@@ -60,8 +62,6 @@ public class PostService {
 		}
 
 
- 
-	 
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
@@ -74,13 +74,37 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post updatePost(Post post) {
-        return postRepository.save(post);
+    //Function 25
+    public void updateUserPost(Long userId, Long postId, PostDTO postDTO) {
+    	
+    	
     }
 
-    public void deletePost(Long id) {
-        postRepository.deleteById(id);
-	    }
+    //Function 25 
+    public void deleteUserPost(Long userId , Long postId) {
+    	
+    	
+    }
 
-    // Add other methods as needed for post-related business logic
+    
+    //Function 15
+    public void filterPostsByStatus(int status) {
+    	
+    }
+    
+    // Function 22
+   
+    public void listUserPosts(Long userId) {
+    	
+    }
+
+    
+    //Function 23 
+    public void filterUserPostsByStatus(Long userId, int status) {
+    	
+    }
+    
+    
+    
+    
 }

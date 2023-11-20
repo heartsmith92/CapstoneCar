@@ -23,6 +23,7 @@ public class LikeEntityService {
         return likeRepository.findById(id);
     }
 
+    //Function 17
     public LikeEntity createLike(LikeEntity likeEntity) {
         return likeRepository.save(likeEntity);
     }
@@ -34,4 +35,23 @@ public class LikeEntityService {
     public void deleteLike(Long id) {
     	likeRepository.deleteById(id);
     }
+    
+    
+    //Function 18
+    public void dislikePost(Long userId, Long postId) {
+    	
+    }
+    
+    //Function 27 
+    public void listUserLikedPosts(Long userId) {
+    	
+    	
+    }
+    
+    
+    //Function 28 
+    
+    public void listUserDislikedPosts(Long userId) {}
+    
+    
 }
