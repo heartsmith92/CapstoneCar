@@ -61,7 +61,8 @@ public class PostService {
 		    return createdPost;
 		}
 
-
+	
+	//Function 13
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }

@@ -48,7 +48,6 @@ public class LikeEntityService {
     	
     }
     
-    
     //Function 28 
     
     public void listUserDislikedPosts(Long userId) {}
