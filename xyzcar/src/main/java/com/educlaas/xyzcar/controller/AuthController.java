@@ -56,7 +56,7 @@ public class AuthController {
             // Return a success message or status code
             return ResponseEntity.ok("User registered successfully: " + registeredUser);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed." + userDTO.getEmail());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed.");
         }
     }
 
