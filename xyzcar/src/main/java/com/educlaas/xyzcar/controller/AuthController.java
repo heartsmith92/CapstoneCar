@@ -17,7 +17,7 @@ import com.educlaas.xyzcar.repository.AuthResponse;
 import com.educlaas.xyzcar.service.UserService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/community")
 @CrossOrigin(origins = "http://localhost:3000/")
 public class AuthController {
 
@@ -30,12 +30,12 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
     	try {
             // Check if the username is already in use
-            if (userService.isUsernameTaken(userDTO.getUsername())) {
-                return ResponseEntity.badRequest().body("Username is already taken.");
+            if (userService.isEmailTaken(userDTO.getEmail())) {
+                return ResponseEntity.badRequest().body("Email is already taken.");
             }
 
             // Create a new user entity and save it to the database
@@ -48,24 +48,23 @@ public class AuthController {
             user.setUserType(userDTO.getUserType());
             user.setUserBio(userDTO.getUserBio());
             user.setStatus(userDTO.getStatus());
-            user.setProfileImgPath(userDTO.getProfileImage());
+            user.setProfileImgPath(userDTO.getProfileImgPath());
 
             // You may set other user properties here
-
-            User registeredUser = userService.registerUser(user);
+            User registeredUser = userService.save(user);
 
             // Return a success message or status code
             return ResponseEntity.ok("User registered successfully: " + registeredUser);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed." + userDTO.getEmail());
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO) {
     	try {
             // Find the user by username
-            User user = userService.findByUsername(userDTO.getUsername());
+            User user = userService.findByEmail(userDTO.getEmail());
 
             if (user == null) {
                 return ResponseEntity.badRequest().body("User not found.");
@@ -80,7 +79,7 @@ public class AuthController {
             String token = tokenProvider.generateToken(user.getUsername());
 
             // Create a custom response object to include user details and token
-            AuthResponse authResponse = new AuthResponse(user.getId(), user.getUsername(), user.getFirstName(), user.getLastName(), token, user.getProfileImgPath());
+            AuthResponse authResponse = new AuthResponse(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), token, user.getProfileImgPath());
 
             // Return the custom response object as JSON
             return ResponseEntity.ok(authResponse);
