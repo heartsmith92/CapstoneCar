@@ -57,6 +57,13 @@ public class PostController {
 			return postService.getPostById(postId);
 		}
 	    
+	    
+	    
+	 // Function 14: Filter posts by status
+	    @GetMapping("/filter/posts/{status}")
+	    public List<Post> filterPostsByStatus(@PathVariable int status) {
+	        return postService.filterPostsByStatus(status);
+	    }
 
 
 	    

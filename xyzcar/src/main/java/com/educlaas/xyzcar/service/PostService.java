@@ -62,9 +62,12 @@ public class PostService {
 		}
 
 
+	//Function 13
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
+    
+
 
     public Optional<Post> getPostById(Long id) {
         return postRepository.findById(id);
@@ -87,8 +90,9 @@ public class PostService {
     }
 
     
-    //Function 15
-    public void filterPostsByStatus(int status) {
+    //Function 14
+    public List<Post> filterPostsByStatus(int status) {
+    	return postRepository.findByStatus(status);
     	
     }
     
