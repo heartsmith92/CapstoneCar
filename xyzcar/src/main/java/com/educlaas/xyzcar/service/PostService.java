@@ -92,11 +92,12 @@ public class PostService {
     	
     }
     
-    // Function 22
+    // Function 22 
    
-    public void listUserPosts(Long userId) {
-    	
+    public List<Post> findPostsByUserIdAndStatus(Long userId, Integer status) {
+        return postRepository.findPostsByUserIdAndStatus(userId, status);
     }
+
 
     
     //Function 23 

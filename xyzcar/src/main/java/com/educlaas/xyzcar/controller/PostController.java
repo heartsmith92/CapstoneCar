@@ -57,7 +57,14 @@ public class PostController {
 			return postService.getPostById(postId);
 		}
 	    
-
+	    
+	 // Function 22: List user posts with optional status
+	    @GetMapping("/get/posts/user/{userId}/{status}")
+	    public List<Post> listUserPosts(
+	            @PathVariable Long userId,
+	            @PathVariable  Integer status) {
+	        return postService.findPostsByUserIdAndStatus(userId, status);
+	    }
 
 	    
 	    
