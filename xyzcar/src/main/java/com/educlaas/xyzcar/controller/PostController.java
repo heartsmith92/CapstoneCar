@@ -65,11 +65,10 @@ public class PostController {
 	    @PostMapping("/addLikesToPost/{userId}/{postId}")
 	    public ResponseEntity<LikeEntity> addLikesToPost(
 	            @PathVariable Integer userId,
-	            @PathVariable Long postId,
-	            @RequestBody PostDTO postDTO) {
+	            @PathVariable Long postId) {
 
 	        // Call the service method to create a new like
-	        LikeEntity createdLike = LikeEntityService.addLikesToPost(userId, postId, postDTO);
+	        LikeEntity createdLike = LikeEntityService.addLikesToPost(userId, postId);
 
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createdLike, HttpStatus.CREATED);

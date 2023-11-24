@@ -24,7 +24,8 @@ public class LikeEntityService {
     @Autowired
     private static LikeRepository likeRepository;
     @Autowired
-    private static PostRepository postRepository;
+    private PostRepository postRepository;
+
 
 
     
@@ -53,7 +54,13 @@ public class LikeEntityService {
     public void deleteLike(Long id) {
     	likeRepository.deleteById(id);
     }
-    public LikeEntity addLikesToPost(Integer userId, Long postId, PostDTO postDTO) {
+    public LikeEntity addLikesToPost(Integer userId, Long postId) {
+    	
+    	if (likeRepository == null) {
+            // Log or print a message to indicate the null state
+            System.out.println("LikeRepository is null");
+            // You can use a logger instead of System.out.println
+        }
         // Step A: Retrieve the post based on postId
     	Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
@@ -69,12 +76,13 @@ public class LikeEntityService {
         // Step B: Create LikeEntity objects for the given PostDTO
         LikeEntity like = new LikeEntity();
         like.setCreatedDate(new Date());
-        like.setStatus(postDTO.getStatus());
+        like.setStatus(1);
         like.setUser(existingUser); // Set the existing user associated with the post
         like.setPost(post);
 
         // Save the like in the database
-        LikeEntity createdLike = likeRepository.save(like);
+//        LikeEntity createdLike = likeRepository.save(like);
+        LikeEntity createdLike = postRepository.save(like);
 
         return createdLike; // Return the updated post
     }
