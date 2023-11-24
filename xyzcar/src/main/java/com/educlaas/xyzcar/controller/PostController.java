@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
+import com.educlaas.xyzcar.dto.PostDTO;
+import com.educlaas.xyzcar.entity.LikeEntity;
 import com.educlaas.xyzcar.entity.Post;
+import com.educlaas.xyzcar.service.LikeEntityService;
 import com.educlaas.xyzcar.service.PostService;
+
 
 
 @RestController
@@ -27,6 +31,8 @@ public class PostController {
 
 	   @Autowired
 	    private PostService postService;
+	   @Autowired
+	   private LikeEntityService LikeEntityService;
 	   
 	   
 	   @PostMapping("/createPost/{userId}/{communityId}")
@@ -57,7 +63,30 @@ public class PostController {
 			return postService.getPostById(postId);
 		}
 	    
+	    @PostMapping("/addLikesToPost/{userId}/{postId}")
+	    public ResponseEntity<Post> addLikesToPost(
+	            @PathVariable Integer user,
+	            @PathVariable Integer post,
+	            @RequestBody PostDTO postDTO)  {
 
+	        // Call the service method to create a new like
+	        LikeEntity createdLike = LikeEntityService.addLikesToPost(user, post, postDTO);
+
+	        // Return the updated post and a HTTP status code indicating success
+	        return new ResponseEntity<>(createdLike, HttpStatus.CREATED);
+	    }
+	
+	    //Get All Likes
+	    @GetMapping(value = "/get/likes")
+		public List<LikeEntity> getLike(){
+			return LikeEntityService.getAllLikes();
+		}
+	    
+	    //GetSpecificLikes
+	    @GetMapping(value = "/get/posts/{likeId}")
+		public Optional<LikeEntity> getLikeById(@PathVariable Long likeId){
+			return LikeEntityService.getLikeById(likeId);
+		}
 
 	    
 	    
