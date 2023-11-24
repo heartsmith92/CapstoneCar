@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
+import com.educlaas.xyzcar.dto.UpdatePostDTO;
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.service.PostService;
 
@@ -56,6 +57,21 @@ public class PostController {
 		public Optional<Post> getPostById(@PathVariable Long postId){
 			return postService.getPostById(postId);
 		}
+	    
+	 // Function 24: Update user post
+	    @PutMapping("/update/post/{userId}/{postId}")
+	    public ResponseEntity<Post> updateUserPost(
+	            @PathVariable Long userId,
+	            @PathVariable Long postId,
+	            @RequestBody UpdatePostDTO updatePostDTO) {
+
+	        // Call the service method to update the post
+	        Post updatedPost = postService.updateUserPost(userId, postId, updatePostDTO);
+
+	        // Return the updated post and a HTTP status code indicating success
+	        return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+	    }
+
 	    
 
 
