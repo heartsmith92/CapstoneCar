@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
-import com.educlaas.xyzcar.dto.PostDTO;
+import com.educlaas.xyzcar.dto.UpdatePostDTO;
 import com.educlaas.xyzcar.entity.Community;
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.User;
@@ -75,15 +75,28 @@ public class PostService {
     }
 
     //Function 25
-    public void updateUserPost(Long userId, Long postId, PostDTO postDTO) {
+    public void updateUserPost(Long userId, Long postId, UpdatePostDTO updatePostDTO) {
     	
     	
     }
 
-    //Function 25 
-    public void deleteUserPost(Long userId , Long postId) {
-    	
-    	
+    // Function 25: Delete user post
+    public void deleteUserPost(Long userId, Long postId) {
+        // Validate user existence and post ownership
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // Check if the post belongs to the specified user
+        if (!existingPost.getUser().equals(existingUser)) {
+            throw new RuntimeException("User does not own the specified post");
+        }
+
+        // Soft delete the post by updating its status to 0 (or another value representing deleted)
+        existingPost.setStatus(0);
+        postRepository.save(existingPost);
     }
 
     
