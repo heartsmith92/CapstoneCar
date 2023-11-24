@@ -53,9 +53,9 @@ public class LikeEntityService {
     public void deleteLike(Long id) {
     	likeRepository.deleteById(id);
     }
-    public LikeEntity addLikesToPost(Integer user, Integer post, PostDTO postDTO) {
+    public LikeEntity addLikesToPost(Integer userId, Long postId, PostDTO postDTO) {
         // Step A: Retrieve the post based on postId
-        postLike postLike = postRepository.findById(post)
+    	Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         // Retrieve the existing user associated with the provided postId
@@ -71,10 +71,10 @@ public class LikeEntityService {
         like.setCreatedDate(new Date());
         like.setStatus(postDTO.getStatus());
         like.setUser(existingUser); // Set the existing user associated with the post
-        like.setPost(postLike);
+        like.setPost(post);
 
         // Save the like in the database
-        LikeEntity createdLike = LikeRepository.save(like);
+        LikeEntity createdLike = likeRepository.save(like);
 
         return createdLike; // Return the updated post
     }

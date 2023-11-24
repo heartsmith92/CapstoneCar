@@ -25,7 +25,7 @@ import com.educlaas.xyzcar.service.PostService;
 
 
 @RestController
-@RequestMapping("/xyz/posts")
+@RequestMapping("/community")
 @CrossOrigin(origins = "http://localhost:3000")  
 public class PostController {
 
@@ -35,7 +35,7 @@ public class PostController {
 	   private LikeEntityService LikeEntityService;
 	   
 	   
-	   @PostMapping("/createPost/{userId}/{communityId}")
+	   @PostMapping("/create/post/{userId}/{communityId}")
 	   public ResponseEntity<Post> createPost(
 	           @PathVariable Long userId,
 	           @PathVariable(required = false) Long communityId,
@@ -48,7 +48,6 @@ public class PostController {
 	       return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
 	   }
 
-
 	    
 	    //Get All Post
 	    @GetMapping(value = "/get/posts")
@@ -58,19 +57,19 @@ public class PostController {
 	    
 	    
 	    //GetSpecificPost
-	    @GetMapping(value = "/get/posts/{postId}")
+	    @GetMapping(value = "/get/post/{postId}")
 		public Optional<Post> getPostById(@PathVariable Long postId){
 			return postService.getPostById(postId);
 		}
 	    
 	    @PostMapping("/addLikesToPost/{userId}/{postId}")
-	    public ResponseEntity<Post> addLikesToPost(
-	            @PathVariable Integer user,
-	            @PathVariable Integer post,
-	            @RequestBody PostDTO postDTO)  {
+	    public ResponseEntity<LikeEntity> addLikesToPost(
+	            @PathVariable Integer userId,
+	            @PathVariable Long postId,
+	            @RequestBody PostDTO postDTO) {
 
 	        // Call the service method to create a new like
-	        LikeEntity createdLike = LikeEntityService.addLikesToPost(user, post, postDTO);
+	        LikeEntity createdLike = LikeEntityService.addLikesToPost(userId, postId, postDTO);
 
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createdLike, HttpStatus.CREATED);
