@@ -85,10 +85,21 @@ public class PostController {
 		public Optional<LikeEntity> getLikeById(@PathVariable Long likeId){
 			return LikeEntityService.getLikeById(likeId);
 		}
+	    
+	    //Function 17 
+	    @PostMapping("/addDisLikesToPost/{userId}/{postId}")
+	    public ResponseEntity<LikeEntity> addDisLikesToPost(
+	            @PathVariable Integer userId,
+	            @PathVariable Long postId) {
 
-	    
-	    
+	        // Call the service method to create a new like
+	        LikeEntity createdDisLike = LikeEntityService.addDisLikesToPost(userId, postId);
+
+	        // Return the updated post and a HTTP status code indicating success
+	        return new ResponseEntity<>(createdDisLike, HttpStatus.CREATED);
+	    }
+	 
+}
 
 
     // Add other methods for handling post-related endpoints
-}
