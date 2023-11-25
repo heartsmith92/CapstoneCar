@@ -25,7 +25,7 @@ public class LikeEntityService {
     private LikeRepository likeRepository;
     @Autowired
     private PostRepository postRepository;
-
+ 
 
 
     
@@ -133,12 +133,13 @@ public class LikeEntityService {
     }
 
     
-    //Function 27 
-    public void listUserLikedPosts(Long userId) {
-    	
-    	
+    //Function 26 
+    public List<Post> listUserLikedPosts(Long userId) {
+        List<Post> likedPosts = likeRepository.findAllLikedPostsByUserId(userId);
+
+        // Do something with the liked posts or return them
+        return likedPosts;
     }
-    
     
     //Function 28 
     

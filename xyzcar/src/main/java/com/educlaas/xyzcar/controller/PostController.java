@@ -73,8 +73,8 @@ public class PostController {
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createdLike, HttpStatus.CREATED);
 	    }
-	
-	    //Get All Likes
+	   
+	    //Function 26 Get All Likes
 	    @GetMapping(value = "/get/likes")
 		public List<LikeEntity> getLike(){
 			return LikeEntityService.getAllLikes();
