@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
 import com.educlaas.xyzcar.dto.PostDTO;
+import com.educlaas.xyzcar.entity.Comment;
 import com.educlaas.xyzcar.entity.LikeEntity;
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.Share;
+import com.educlaas.xyzcar.service.CommentService;
 import com.educlaas.xyzcar.service.LikeEntityService;
 import com.educlaas.xyzcar.service.PostService;
 import com.educlaas.xyzcar.service.ShareService;
@@ -38,6 +40,10 @@ public class PostController {
 	   
 	   @Autowired
 	   private ShareService ShareService;
+	   
+	   @Autowired
+	   private CommentService CommentService;
+	   
 	   
 	   @PostMapping("/create/post/{userId}/{communityId}")
 	   public ResponseEntity<Post> createPost(
@@ -128,6 +134,18 @@ public class PostController {
 	        return new ResponseEntity<>(createShare, HttpStatus.CREATED);
 	    }
 	 
+	  //Function 18 Share add to table 
+	    @PostMapping("/commentOnPost/{userId}/{postId}")
+	    public ResponseEntity<Comment> comment(
+	            @PathVariable Integer userId,
+	            @PathVariable Long postId) {
+
+	        // Call the service method to create a new like
+	        Comment createComment = CommentService.commentOnPost(userId, postId);
+
+	        // Return the updated post and a HTTP status code indicating success
+	        return new ResponseEntity<>(createComment, HttpStatus.CREATED);
+	    }
 }
 
 
