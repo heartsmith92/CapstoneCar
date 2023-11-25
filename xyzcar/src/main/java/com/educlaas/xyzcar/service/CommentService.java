@@ -82,9 +82,9 @@ public class CommentService {
     	
     }
     
-    //Function 29 
-    public void listUserComments(Long userId) {
-    	
+    //Function 28 
+    public List<Post> listComment(Long userId, Integer status) {
+        return commentRepository.listcomment(userId, status);
     }
     
     
