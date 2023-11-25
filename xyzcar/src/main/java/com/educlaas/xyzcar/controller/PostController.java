@@ -19,8 +19,10 @@ import com.educlaas.xyzcar.dto.CreatePostDTO;
 import com.educlaas.xyzcar.dto.PostDTO;
 import com.educlaas.xyzcar.entity.LikeEntity;
 import com.educlaas.xyzcar.entity.Post;
+import com.educlaas.xyzcar.entity.Share;
 import com.educlaas.xyzcar.service.LikeEntityService;
 import com.educlaas.xyzcar.service.PostService;
+import com.educlaas.xyzcar.service.ShareService;
 
 
 
@@ -34,6 +36,8 @@ public class PostController {
 	   @Autowired
 	   private LikeEntityService LikeEntityService;
 	   
+	   @Autowired
+	   private ShareService ShareService;
 	   
 	   @PostMapping("/create/post/{userId}/{communityId}")
 	   public ResponseEntity<Post> createPost(
@@ -109,6 +113,19 @@ public class PostController {
 
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createdDisLike, HttpStatus.CREATED);
+	    }
+	    
+	    //Function 19 Share add to table 
+	    @PostMapping("/sharePost/{userId}/{postId}")
+	    public ResponseEntity<Share> share(
+	            @PathVariable Integer userId,
+	            @PathVariable Long postId) {
+
+	        // Call the service method to create a new like
+	        Share createShare = ShareService.sharePost(userId, postId);
+
+	        // Return the updated post and a HTTP status code indicating success
+	        return new ResponseEntity<>(createShare, HttpStatus.CREATED);
 	    }
 	 
 }

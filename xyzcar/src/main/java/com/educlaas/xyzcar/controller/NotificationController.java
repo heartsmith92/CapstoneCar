@@ -65,4 +65,20 @@ public class NotificationController {
 
         return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
     }
+    
+    @PostMapping("/shareToNL/{userId}/{postId}/{targetUserId}/{notificationType}")
+    public ResponseEntity<NotificationLog> shareToNL(@PathVariable Long userId,
+                                                        @PathVariable Long postId,
+                                                        @PathVariable Integer targetUserId,
+                                                        @PathVariable int notificationType) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        NotificationLog addedNotificationLog = notificationLogService.shareToNL(existingUser, existingPost, targetUserId, notificationType);
+
+        return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
+    }
 }

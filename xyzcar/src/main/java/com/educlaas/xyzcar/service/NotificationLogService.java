@@ -13,6 +13,7 @@ import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.NotificationLogRepository;
 import com.educlaas.xyzcar.repository.PostRepository;
+import com.educlaas.xyzcar.repository.ShareRepository;
 
 @Service
 public class NotificationLogService {
@@ -21,6 +22,8 @@ public class NotificationLogService {
     private NotificationLogRepository notificationLogRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private ShareRepository shareRepository;
 
    
 
@@ -58,6 +61,30 @@ public class NotificationLogService {
         
         // Set notification type based on the action (like = 1, dislike = 2)
         if (notificationType == 1 || notificationType == 2) {
+            notificationLog.setNotificationType(notificationType);
+        } else {
+            throw new IllegalArgumentException("Invalid notification type");
+        }
+
+        // Set other attributes in the notification log as needed
+        
+        NotificationLog addedNotificationLog = notificationLogRepository.save(notificationLog);
+
+        return addedNotificationLog;
+    
+    }
+    
+  //Function19 Add Share to NotificationLog
+   
+
+    public NotificationLog shareToNL(User user, Post post, Integer targetUserId, int notificationType) {
+        NotificationLog notificationLog = new NotificationLog();
+        notificationLog.setCreatedDate(new Date());
+        notificationLog.setUser(user);
+        notificationLog.setTargetUserID(targetUserId);
+        
+        // Set notification type based on the action (3=share)
+        if (notificationType == 3 ) {
             notificationLog.setNotificationType(notificationType);
         } else {
             throw new IllegalArgumentException("Invalid notification type");
