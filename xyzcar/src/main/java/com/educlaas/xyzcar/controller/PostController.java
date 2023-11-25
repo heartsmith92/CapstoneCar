@@ -74,10 +74,22 @@ public class PostController {
 	        return new ResponseEntity<>(createdLike, HttpStatus.CREATED);
 	    }
 	   
-	    //Function 26 Get All Likes
-	    @GetMapping(value = "/get/likes")
-		public List<LikeEntity> getLike(){
-			return LikeEntityService.getAllLikes();
+	    //Function 26 Get All Likes where status =1 
+	    @GetMapping(value = "/get/likes/{user}")
+	    public List<Post> getlikedPosts() {
+	        Long userId = 1L; // Replace this with the actual user ID you want to query for
+	        Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
+
+	        return LikeEntityService.listUserDisLikedPosts(userId, status);
+		}
+	    
+	  //Function 27 Get All DisLikes where status=0
+	    @GetMapping(value = "/get/dislikes/{user}")
+	    public List<Post> getDislikedPosts() {
+	        Long userId = 1L; // Replace this with the actual user ID you want to query for
+	        Integer status = 0; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
+
+	        return LikeEntityService.listUserDisLikedPosts(userId, status);
 		}
 	    
 	    //GetSpecificLikes

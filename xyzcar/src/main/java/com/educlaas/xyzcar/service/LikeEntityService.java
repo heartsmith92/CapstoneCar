@@ -37,6 +37,10 @@ public class LikeEntityService {
     public List<LikeEntity> getAllLikes() {
         return likeRepository.findAll();
     }
+    
+    public List<LikeEntity> getAllDisLikes() {
+        return likeRepository.findAll();
+    }
 
     public Optional<LikeEntity> getLikeById(Long id) {
         return likeRepository.findById(id);
@@ -134,19 +138,14 @@ public class LikeEntityService {
 
     
     //Function 26 
-    public List<Post> listUserLikedPosts(Long userId) {
-        List<Post> likedPosts = likeRepository.findAllLikedPostsByUserId(userId);
-
-        // Do something with the liked posts or return them
-        return likedPosts;
+    public List<Post> listUserLikedPosts(Long userId, Integer status) {
+        return likeRepository.findAllLikedPostsByUserIdAndStatus(userId, status);
     }
     
-    //Function 28 
+    //Function 27 
     
-    public void listUserDislikedPosts(Long userId) {}
-
-	
-    
+    public List<Post> listUserDisLikedPosts(Long userId, Integer status) {
+        return likeRepository.findAllDisLikedPostsByUserIdAndStatus(userId, status);
 }
-
+}
 

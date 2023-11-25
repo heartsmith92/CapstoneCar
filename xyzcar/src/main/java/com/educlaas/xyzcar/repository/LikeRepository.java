@@ -19,7 +19,8 @@ LikeEntity save(LikeEntity like);
 	
 	// Define a method to find a LikeEntity by User and Post
 	LikeEntity findByUserAndPost(User user, Post post);
-	@Query("SELECT le.post FROM LikeEntity le WHERE le.user.id = :id")
-    List<Post> findAllLikedPostsByUserId(@Param("id") Long id);
-	
+	@Query("SELECT le.post FROM LikeEntity le WHERE le.user.id = :userId AND le.status = :status")
+	List<Post> findAllLikedPostsByUserIdAndStatus(@Param("userId") Long userId, @Param("status") Integer status);
+	@Query("SELECT le.post FROM LikeEntity le WHERE le.user.id = :userId AND le.status = :status")
+	List<Post> findAllDisLikedPostsByUserIdAndStatus(@Param("userId") Long userId, @Param("status") Integer status);
 }
