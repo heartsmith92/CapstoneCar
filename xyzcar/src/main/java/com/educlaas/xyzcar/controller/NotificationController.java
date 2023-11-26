@@ -21,16 +21,6 @@ public class NotificationController {
     @Autowired
     private NotificationLogService notificationLogService;
 
-//    // Function 20: Get post tabulation (likes, comments, shares)
-//    @GetMapping("/get/post/tabulation/{postId}")
-//    public ResponseEntity<PostTabulationDTO> getPostTabulation(@PathVariable Long postId) {
-//
-//        // Call the service method to get post tabulation
-//        PostTabulationDTO postTabulation = notificationLogService.getPostTabulation(postId);
-//
-//        // Return the post tabulation and a HTTP status code indicating success
-//        return new ResponseEntity<>(postTabulation, HttpStatus.OK);
-//    }
     
     
     
