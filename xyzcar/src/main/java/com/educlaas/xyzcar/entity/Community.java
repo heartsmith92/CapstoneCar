@@ -42,7 +42,7 @@ public class Community {
     private Date createdDate;
 
     @Column(name = "status", length = 45)
-    private String status;
+    private Integer status;
 
     @Column(name = "communityLogoPath", length = 45)
     private String communityLogoPath;

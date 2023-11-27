@@ -6,7 +6,7 @@ import lombok.Data;
 public class CreateCommunityDTO {
 	private String communityName;
 	private String communityBio;
-	private String status;
+	private Integer status;
 	private String communityLogoPath;
 	
 	

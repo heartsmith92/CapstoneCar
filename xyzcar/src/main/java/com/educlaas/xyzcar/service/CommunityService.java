@@ -28,9 +28,9 @@ public class CommunityService {
 	
 
 
-	//
-    public List<Community> listAllCommunities() {
-        return communityRepository.findAll();
+	//Function 5 List All Community
+	 public List<Community> findAllCommunity() {
+		    return communityRepository.findAllCommunity();
       
     }
 
@@ -59,9 +59,9 @@ public class CommunityService {
         communityRepository.deleteById(id);
     }
 
-    //Function 7 Function 33
-    public void filterCommunitiesByStatus(int status) {
-    	
+    //Function 6 Filtercommunityby status=1
+    public List<Community> filterCommunityByStatus(Integer status) {
+        return communityRepository.filterCommunitiesByStatus(status);
     }
     
     //Function 8 Function 34
@@ -114,6 +114,8 @@ public class CommunityService {
     	
     	
     }
+
+	
     
     
 

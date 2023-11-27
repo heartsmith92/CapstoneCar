@@ -1,9 +1,12 @@
 package com.educlaas.xyzcar.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +26,7 @@ public class CommunityController {
 	
 	   @Autowired
 			private CommunityService CommunityService;
-	
+	//function 31
 	@PostMapping("/create/community/{userId}")
 	   public ResponseEntity<Community> createCommunity(
 	           @PathVariable Long userId,
@@ -37,7 +40,23 @@ public class CommunityController {
 	       return new ResponseEntity<>(createCommunity, HttpStatus.CREATED);
 	   }
 	
+	
+	//Function 5 Get All Post
+    @GetMapping(value = "/get/community")
+	public List<Community> getCommunity(){
+		return CommunityService.findAllCommunity();
+	}
+    
+    //Function 6 Filter Community by Status=1
+    @GetMapping(value = "/get/commbystatus")
+    public List<Community> getCommunitybyStatus() {
+        
+        Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
+
+        return CommunityService.filterCommunityByStatus(status);
+	
 	   }
+}
 	
 	
 	
