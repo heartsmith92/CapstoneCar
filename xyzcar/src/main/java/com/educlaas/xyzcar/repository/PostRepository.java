@@ -3,7 +3,12 @@ package com.educlaas.xyzcar.repository;
 
 import java.util.List;
 
+
+
+import java.util.List;
+
 import java.util.Optional;
+
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +25,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     // You can add custom query methods here if needed
 	
+
+    @Query("SELECT p FROM Post p WHERE p.status = :status")
+    List<Post> findByStatus(@Param("status") int status);
+	
+
 	
 //    @Query("SELECT p FROM Post p WHERE p.user.id = :userId")
 //    List<Post> findPostsByUserId(@Param("userId") Long userId);
@@ -32,5 +42,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	LikeEntity save(LikeEntity like);
 	Share save(Share like);
 	Comment save(Comment comment);
+
 
 }
