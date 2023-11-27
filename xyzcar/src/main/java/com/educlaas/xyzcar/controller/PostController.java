@@ -146,6 +146,15 @@ public class PostController {
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createComment, HttpStatus.CREATED);
 	    }
+	    
+	    //Function 28 list all comment
+	    @GetMapping(value = "/get/comment/{user}")
+	    public List<Post> getComment() {
+	        Long userId = 1L; // Replace this with the actual user ID you want to query for
+	        Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
+
+	        return CommentService.listComment(userId, status);
+		}
 }
 
 
