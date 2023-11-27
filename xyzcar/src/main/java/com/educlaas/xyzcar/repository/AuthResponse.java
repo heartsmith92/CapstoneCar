@@ -2,7 +2,7 @@ package com.educlaas.xyzcar.repository;
 
 public class AuthResponse {
 	private Long id;
-    private String username;
+    private String email;
     private String firstName;
     private String lastName;
     private String token;
@@ -16,9 +16,9 @@ public class AuthResponse {
 		this.profileImage = profileImage;
 	}
 
-	public AuthResponse(Long id,String username, String firstName, String lastName, String token, String profileImage) {
+	public AuthResponse(Long id, String email, String firstName, String lastName, String token, String profileImage) {
 		this.id = id;
-        this.username = username;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.token = token;
@@ -33,12 +33,12 @@ public class AuthResponse {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getFirstName() {
