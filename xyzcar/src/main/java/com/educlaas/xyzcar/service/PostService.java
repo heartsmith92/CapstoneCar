@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
-import com.educlaas.xyzcar.dto.PostDTO;
+import com.educlaas.xyzcar.dto.UpdatePostDTO;
 import com.educlaas.xyzcar.entity.Community;
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.User;
@@ -76,12 +76,35 @@ public class PostService {
     public Post createPost(Post post) {
         return postRepository.save(post);
     }
-
-    //Function 25
-    public void updateUserPost(Long userId, Long postId, PostDTO postDTO) {
-    	
-    	
+    
+    public Optional<Post> getTargetUserID(Long id) {
+        return postRepository.findById(id);
     }
+
+ // Function 24: Update user post
+    public Post updateUserPost(Long userId, Long postId, UpdatePostDTO updatePostDTO) {
+        // Validate user existence
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Retrieve the post to update
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // Update post fields with the values from the DTO
+        existingPost.setPostContent(updatePostDTO.getPostContent());
+        existingPost.setPostImgPath(updatePostDTO.getPostImgPath());
+        existingPost.setPostTitle(updatePostDTO.getPostTitle());
+        existingPost.setPostType(updatePostDTO.getPostType());
+        existingPost.setStatus(updatePostDTO.getStatus());
+
+        // Save the updated post in the database
+        Post updatedPost = postRepository.save(existingPost);
+
+        return updatedPost;
+    }
+
+
 
     //Function 25 
     public void deleteUserPost(Long userId , Long postId) {
@@ -96,11 +119,12 @@ public class PostService {
     	
     }
     
-    // Function 22
+    // Function 22 
    
-    public void listUserPosts(Long userId) {
-    	
+    public List<Post> findPostsByUserIdAndStatus(Long userId, Integer status) {
+        return postRepository.findPostsByUserIdAndStatus(userId, status);
     }
+
 
     
     //Function 23 
