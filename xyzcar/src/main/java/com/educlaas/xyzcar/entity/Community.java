@@ -39,7 +39,7 @@ public class Community {
     private String communityBio;
 
     @Column(name = "createdDate", length = 45)
-    private String createdDate;
+    private Date createdDate;
 
     @Column(name = "status", length = 45)
     private String status;
