@@ -2,9 +2,8 @@ package com.educlaas.xyzcar.entity;
 
 import java.util.Date; // Import java.util.Date
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.educlaas.xyzcar.dto.PostDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,12 +36,14 @@ public class LikeEntity {
 
 	    @ManyToOne
 	    @JoinColumn(name = "FK_userID")
-	    @JsonManagedReference 
+	    @JsonIgnoreProperties("likes")
 	    private User user;
 
 	    @ManyToOne
 	    @JoinColumn(name = "FK_postID")
-	    @JsonBackReference 
+	    @JsonIgnoreProperties("likes")
 	    private Post post;
+
+		
 
 }

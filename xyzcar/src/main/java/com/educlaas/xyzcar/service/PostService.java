@@ -73,6 +73,10 @@ public class PostService {
     public Post createPost(Post post) {
         return postRepository.save(post);
     }
+    
+    public Optional<Post> getTargetUserID(Long id) {
+        return postRepository.findById(id);
+    }
 
  // Function 24: Update user post
     public Post updateUserPost(Long userId, Long postId, UpdatePostDTO updatePostDTO) {
