@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +76,18 @@ public class PostController {
 		}
 	    
 	    
-	    
+	    // Function 25: Delete user post
+	    @DeleteMapping("/delete/post/{userId}/{postId}")
+	    public ResponseEntity<Void> deleteUserPost(
+	            @PathVariable Long userId,
+	            @PathVariable Long postId) {
+
+	        // Call the service method to delete the post
+	        postService.deleteUserPost(userId, postId);
+
+	        // Return a HTTP status code indicating success
+	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    }	    
 	 // Function 14: Filter posts by status
 	    @GetMapping("/filter/posts/{status}")
 	    public List<Post> filterPostsByStatus(@PathVariable int status) {

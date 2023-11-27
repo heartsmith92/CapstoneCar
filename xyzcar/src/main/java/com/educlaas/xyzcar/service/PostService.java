@@ -76,6 +76,30 @@ public class PostService {
     public Post createPost(Post post) {
         return postRepository.save(post);
     }
+
+    //Function 25
+    public void updateUserPost(Long userId, Long postId, UpdatePostDTO updatePostDTO) {
+    	
+    	
+    }
+
+    // Function 25: Delete user post
+    public void deleteUserPost(Long userId, Long postId) {
+        // Validate user existence and post ownership
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // Check if the post belongs to the specified user
+        if (!existingPost.getUser().equals(existingUser)) {
+            throw new RuntimeException("User does not own the specified post");
+        }
+
+        // Soft delete the post by updating its status to 0 (or another value representing deleted)
+        existingPost.setStatus(0);
+        postRepository.save(existingPost);
     
     public Optional<Post> getTargetUserID(Long id) {
         return postRepository.findById(id);
