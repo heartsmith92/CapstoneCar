@@ -142,10 +142,18 @@ public class LikeEntityService {
         return likeRepository.findAllLikedPostsByUserIdAndStatus(userId, status);
     }
     
+
+    //Function 28 
+    
+    public void listUserDislikedPosts(Long userId) {}
+    
+    
+
     //Function 27 
     
     public List<Post> listUserDisLikedPosts(Long userId, Integer status) {
         return likeRepository.findAllDisLikedPostsByUserIdAndStatus(userId, status);
+
 }
 }
 
