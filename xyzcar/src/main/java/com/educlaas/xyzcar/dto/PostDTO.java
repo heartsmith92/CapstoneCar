@@ -11,4 +11,5 @@ public class PostDTO {
     private Integer status;
     private Integer user;
     private Integer post;
+    private Integer targetUserID;
 }

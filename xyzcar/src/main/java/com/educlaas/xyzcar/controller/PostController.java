@@ -19,8 +19,10 @@ import com.educlaas.xyzcar.dto.CreatePostDTO;
 import com.educlaas.xyzcar.dto.PostDTO;
 import com.educlaas.xyzcar.entity.LikeEntity;
 import com.educlaas.xyzcar.entity.Post;
+import com.educlaas.xyzcar.entity.Share;
 import com.educlaas.xyzcar.service.LikeEntityService;
 import com.educlaas.xyzcar.service.PostService;
+import com.educlaas.xyzcar.service.ShareService;
 
 
 
@@ -34,6 +36,8 @@ public class PostController {
 	   @Autowired
 	   private LikeEntityService LikeEntityService;
 	   
+	   @Autowired
+	   private ShareService ShareService;
 	   
 	   @PostMapping("/create/post/{userId}/{communityId}")
 	   public ResponseEntity<Post> createPost(
@@ -73,11 +77,23 @@ public class PostController {
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createdLike, HttpStatus.CREATED);
 	    }
-	
-	    //Get All Likes
-	    @GetMapping(value = "/get/likes")
-		public List<LikeEntity> getLike(){
-			return LikeEntityService.getAllLikes();
+	   
+	    //Function 26 Get All Likes where status =1 
+	    @GetMapping(value = "/get/likes/{user}")
+	    public List<Post> getlikedPosts() {
+	        Long userId = 1L; // Replace this with the actual user ID you want to query for
+	        Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
+
+	        return LikeEntityService.listUserDisLikedPosts(userId, status);
+		}
+	    
+	  //Function 27 Get All DisLikes where status=0
+	    @GetMapping(value = "/get/dislikes/{user}")
+	    public List<Post> getDislikedPosts() {
+	        Long userId = 1L; // Replace this with the actual user ID you want to query for
+	        Integer status = 0; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
+
+	        return LikeEntityService.listUserDisLikedPosts(userId, status);
 		}
 	    
 	    //GetSpecificLikes
@@ -85,10 +101,34 @@ public class PostController {
 		public Optional<LikeEntity> getLikeById(@PathVariable Long likeId){
 			return LikeEntityService.getLikeById(likeId);
 		}
+	    
+	    //Function 17 
+	    @PostMapping("/addDisLikesToPost/{userId}/{postId}")
+	    public ResponseEntity<LikeEntity> addDisLikesToPost(
+	            @PathVariable Integer userId,
+	            @PathVariable Long postId) {
 
+	        // Call the service method to create a new like
+	        LikeEntity createdDisLike = LikeEntityService.addDisLikesToPost(userId, postId);
+
+	        // Return the updated post and a HTTP status code indicating success
+	        return new ResponseEntity<>(createdDisLike, HttpStatus.CREATED);
+	    }
 	    
-	    
+	    //Function 19 Share add to table 
+	    @PostMapping("/sharePost/{userId}/{postId}")
+	    public ResponseEntity<Share> share(
+	            @PathVariable Integer userId,
+	            @PathVariable Long postId) {
+
+	        // Call the service method to create a new like
+	        Share createShare = ShareService.sharePost(userId, postId);
+
+	        // Return the updated post and a HTTP status code indicating success
+	        return new ResponseEntity<>(createShare, HttpStatus.CREATED);
+	    }
+	 
+}
 
 
     // Add other methods for handling post-related endpoints
-}
