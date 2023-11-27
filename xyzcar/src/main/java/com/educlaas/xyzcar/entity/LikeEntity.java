@@ -2,7 +2,6 @@ package com.educlaas.xyzcar.entity;
 
 import java.util.Date; // Import java.util.Date
 
-import com.educlaas.xyzcar.dto.PostDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;

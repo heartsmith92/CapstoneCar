@@ -77,11 +77,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    //Function 25
-    public void updateUserPost(Long userId, Long postId, UpdatePostDTO updatePostDTO) {
-    	
-    	
-    }
+
 
     // Function 25: Delete user post
     public void deleteUserPost(Long userId, Long postId) {
@@ -100,6 +96,8 @@ public class PostService {
         // Soft delete the post by updating its status to 0 (or another value representing deleted)
         existingPost.setStatus(0);
         postRepository.save(existingPost);
+        
+    }
     
     public Optional<Post> getTargetUserID(Long id) {
         return postRepository.findById(id);
@@ -129,12 +127,6 @@ public class PostService {
     }
 
 
-
-    //Function 25 
-    public void deleteUserPost(Long userId , Long postId) {
-    	
-    	
-    }
 
     
     //Function 14

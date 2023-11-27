@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
-import com.educlaas.xyzcar.dto.PostDTO;
 import com.educlaas.xyzcar.entity.Community;
 import com.educlaas.xyzcar.entity.LikeEntity;
 import com.educlaas.xyzcar.entity.Post;

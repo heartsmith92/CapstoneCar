@@ -49,14 +49,7 @@ public class NotificationLogService {
     public List<NotificationLog> getAllNotificationLogs() {
         return notificationLogRepository.findAll();
     }
-    @Autowired
-    private PostRepository postRepository;
-    @Autowired
-    private ShareRepository shareRepository;
-    @Autowired
-    private CommentRepository commentRepository;
 
-   
 
     public Optional<NotificationLog> getNotificationLogById(Long id) {
         return notificationLogRepository.findById(id);
@@ -85,6 +78,8 @@ public class NotificationLogService {
         tabulation.put("shareCount", shareRepository.countSharesByPostIdAndStatus(postId, 1)); // Assuming 1 is the status for shares
 
         return tabulation;
+        
+    }
     //Function 21 
     public void createNotificationLog(Long userId, Long postId,Integer targetUserId) {
     	

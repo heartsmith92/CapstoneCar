@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
 import com.educlaas.xyzcar.dto.UpdatePostDTO;
-import com.educlaas.xyzcar.dto.PostDTO;
 import com.educlaas.xyzcar.entity.Comment;
 import com.educlaas.xyzcar.entity.LikeEntity;
 
