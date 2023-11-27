@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.config.JwtTokenProvider;
+import com.educlaas.xyzcar.dto.UserDTO;
 import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.UserRepository;
 
@@ -24,58 +25,56 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    //Check If username is taken 
-    public boolean isUsernameTaken(String username) {
-        User user = userRepository.findByUsername(username);
+    //Check If Email is taken 
+    public boolean isEmailTaken(String email) {
+        User user = userRepository.findByEmail(email);
         return user != null;
     }
 
-    //Find User By username
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    //Find User By Email
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     //New Registration
-    public User registerUser(User user) {
-        User existingUser = userRepository.findByUsername(user.getUsername());
+    public User registerUser(UserDTO userDTO) {
+        User existingUser = userRepository.findByEmail(userDTO.getEmail());
         if (existingUser != null) {
-            throw new RuntimeException("User with this username already exists.");
+            throw new RuntimeException("User with this email already exists.");
         }
    
         User newUser = new User();
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(passwordEncoder.encode(user.getPassword())); // Hash the password
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setEmail(user.getEmail());
-        newUser.setUserType(user.getUserType());
-        newUser.setUserBio(user.getUserBio());
-        newUser.setStatus(user.getStatus());
-        newUser.setProfileImgPath(user.getProfileImgPath());
-        newUser.setCreatedDate(new Date(System.currentTimeMillis())); // Set the current date
+        newUser.setUsername(userDTO.getUsername());
+        newUser.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Hash the password
+        newUser.setFirstName(userDTO.getFirstName());
+        newUser.setLastName(userDTO.getLastName());
+        newUser.setEmail(userDTO.getEmail());
+        newUser.setUserType(userDTO.getUserType());
+        newUser.setUserBio(userDTO.getUserBio());
+        newUser.setStatus(userDTO.getStatus());
+        newUser.setProfileImgPath(userDTO.getProfileImgPath());
+        newUser.setCreatedDate(new Date());
         // Set other user properties as needed
-
-        userRepository.save(newUser);
-        return newUser;
+        
+        User registerUser = userRepository.save(newUser);
+        return registerUser;
     }
+ 
 
     //Login Registration 
     public String loginUser(User user) {
-        User existingUser = userRepository.findByUsername(user.getUsername());
+        User existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser == null) {
             throw new RuntimeException("User not found.");
         }
-
 
         // Check if the provided password matches the stored password
         if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
             throw new RuntimeException("Invalid password.");
         }
-        
-                
 
         // Generate a JWT token for the user
-        return tokenProvider.generateToken(existingUser.getUsername());
+        return tokenProvider.generateToken(existingUser.getEmail());
     }
    
     //Get All Users
@@ -83,14 +82,14 @@ public class UserService {
 		return userRepository.findAll();
 	}
     
-    //Save User
-    public void postUser(User user){
-    	userRepository.save(user);
-	}
-    
     //Find By ID
-	public Optional<User> viewCar(Long userId) {
+	public Optional<User> getUserByID(Long userId) {
 		return userRepository.findById(userId);
+	}
+
+	// Update User
+	public User save(User updateUser) {
+	    return userRepository.save(updateUser);
 	}
 }
 
