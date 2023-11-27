@@ -75,6 +75,16 @@ public class PostController {
 		}
 	    
 
+	    
+	 // Function 22: List user posts with optional status
+	    @GetMapping("/get/posts/user/{userId}/{status}")
+	    public List<Post> listUserPosts(
+	            @PathVariable Long userId,
+	            @PathVariable  Integer status) {
+	        return postService.findPostsByUserIdAndStatus(userId, status);
+	    }
+
+
 	 // Function 24: Update user post
 	    @PutMapping("/update/post/{userId}/{postId}")
 	    public ResponseEntity<Post> updateUserPost(
@@ -136,6 +146,7 @@ public class PostController {
 
 	        // Call the service method to create a new like
 	        LikeEntity createdDisLike = LikeEntityService.addDisLikesToPost(userId, postId);
+
 
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createdDisLike, HttpStatus.CREATED);
