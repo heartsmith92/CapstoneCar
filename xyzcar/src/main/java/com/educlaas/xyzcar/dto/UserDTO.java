@@ -1,5 +1,7 @@
 package com.educlaas.xyzcar.dto;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -10,9 +12,10 @@ public class UserDTO {
 	    private String firstName;
 	    private String lastName;
 	    private String email;
+	    private Date createdDate;
 	    private String userType;
 	    private String userBio;
 	    private Integer status;
-	    private String profileImage;
+	    private String profileImgPath;
 
 }
