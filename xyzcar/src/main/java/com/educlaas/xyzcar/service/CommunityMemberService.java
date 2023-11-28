@@ -1,19 +1,28 @@
 package com.educlaas.xyzcar.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.educlaas.xyzcar.entity.Community;
 import com.educlaas.xyzcar.entity.CommunityMember;
+
+import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.CommunityMemberRepository;
+import com.educlaas.xyzcar.repository.CommunityRepository;
 
 @Service
 public class CommunityMemberService {
 
     @Autowired
     private CommunityMemberRepository communityMemberRepository;
+   
+    
+    @Autowired
+    private CommunityRepository communityRepository;
 
     public List<CommunityMember> getAllCommunityMembers() {
         return communityMemberRepository.findAll();
@@ -23,9 +32,29 @@ public class CommunityMemberService {
         return communityMemberRepository.findById(id);
     }
 
-    public CommunityMember createCommunityMember(CommunityMember communityMember) {
-        return communityMemberRepository.save(communityMember);
+    
+  //Function 7 Join Community as member
+    public CommunityMember createCommunityMember(Integer userId, Long communityID) {
+        Optional<Community> communityOptional = communityRepository.findById(communityID);
+        Community community = communityOptional.orElseThrow(() -> new RuntimeException("Community not found"));
+
+        User existingUser = community.getUser();
+
+        if (existingUser == null) {
+            throw new RuntimeException("User associated with the community not found");
+        }
+
+        CommunityMember communityMember = new CommunityMember();
+        communityMember.setCreatedDate(new Date());
+        communityMember.setStatus(1);
+        communityMember.setUser(existingUser);
+        communityMember.setCommunity(community);
+
+        CommunityMember createMember = communityMemberRepository.save(communityMember);
+
+        return createMember;
     }
+    
 
     public CommunityMember updateCommunityMember(CommunityMember communityMember) {
         return communityMemberRepository.save(communityMember);

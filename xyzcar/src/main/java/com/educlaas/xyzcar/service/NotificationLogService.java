@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.educlaas.xyzcar.entity.Community;
 import com.educlaas.xyzcar.entity.LikeEntity;
 import com.educlaas.xyzcar.entity.NotificationLog;
 import com.educlaas.xyzcar.entity.Post;
@@ -112,6 +113,30 @@ public class NotificationLogService {
         
         // Set notification type based on the action (2=comments)
         if (notificationType == 2 ) {
+            notificationLog.setNotificationType(notificationType);
+        } else {
+            throw new IllegalArgumentException("Invalid notification type");
+        }
+
+        // Set other attributes in the notification log as needed
+        
+        NotificationLog addedNotificationLog = notificationLogRepository.save(notificationLog);
+
+        return addedNotificationLog;
+    
+    }
+    
+//Function7 Add Member to NotificationLog
+    
+
+    public NotificationLog memberToNL(User user, Community community, Integer targetUserId, int notificationType) {
+        NotificationLog notificationLog = new NotificationLog();
+        notificationLog.setCreatedDate(new Date());
+        notificationLog.setUser(user);
+        notificationLog.setTargetUserID(targetUserId);
+        
+        // Set notification type based on the action (2=comments)
+        if (notificationType == 6 ) {
             notificationLog.setNotificationType(notificationType);
         } else {
             throw new IllegalArgumentException("Invalid notification type");

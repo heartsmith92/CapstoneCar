@@ -23,7 +23,9 @@ public class CommunityService {
 	private  CommunityRepository communityRepository;
 	
 	 @Autowired
-	 private UserRepository userRepository;                             
+	 private UserRepository userRepository;    
+	 
+	
 	 
 	
 
@@ -108,6 +110,12 @@ public class CommunityService {
 	    return createcommunity;
 	}
 
+ 
+    
+    
+    
+    
+    
     
     //Function 35
     public void unjoinCommunity(Long userId , Long communityId) {

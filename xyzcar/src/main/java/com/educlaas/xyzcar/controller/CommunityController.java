@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.educlaas.xyzcar.dto.CreateCommunityDTO;
 import com.educlaas.xyzcar.dto.CreatePostDTO;
 import com.educlaas.xyzcar.entity.Community;
+import com.educlaas.xyzcar.entity.CommunityMember;
 import com.educlaas.xyzcar.entity.Post;
+import com.educlaas.xyzcar.service.CommunityMemberService;
 import com.educlaas.xyzcar.service.CommunityService;
 
 @RestController
@@ -26,6 +28,13 @@ public class CommunityController {
 	
 	   @Autowired
 			private CommunityService CommunityService;
+	   
+	   @Autowired
+	    private CommunityMemberService communityMemberService;
+	   
+	  
+	        
+	        
 	//function 31
 	@PostMapping("/create/community/{userId}")
 	   public ResponseEntity<Community> createCommunity(
@@ -55,6 +64,21 @@ public class CommunityController {
 
         return CommunityService.filterCommunityByStatus(status);
 	
+	   }
+    
+    //Function 7
+    @PostMapping("/create/communitymember/{userId}/{communityId}")
+	   public ResponseEntity<CommunityMember> createCommunityMember(
+	           @PathVariable Integer userId,
+	           @PathVariable(required = false) Long communityId,
+	           @RequestBody CreateCommunityDTO createCommunityDTO) {
+
+	       // Call the service method to create a new post
+    	CommunityMember createMember = communityMemberService.createCommunityMember(userId, communityId);
+
+
+	       // Return the created post and a HTTP status code indicating success
+	       return new ResponseEntity<>(createMember, HttpStatus.CREATED);
 	   }
 }
 	
