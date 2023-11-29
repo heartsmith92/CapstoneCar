@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.dto.CreateCommunityDTO;
@@ -91,26 +92,19 @@ public class CommunityController {
 	       return new ResponseEntity<>(createMember, HttpStatus.CREATED);
 	   }
     //Function 34
-    @PutMapping("/unjoin/{userId}/{communityId}")
-    public ResponseEntity<String> updateUserMembership(
-            @PathVariable Long userId,
-            @PathVariable Long communityId,
-            @RequestBody CreateCommunityDTO CreateCommunityDTO) {
+    @PostMapping("/unjoin/communitymember/{userId}/{communityId}")
+    public ResponseEntity<CommunityMember> unjoinCommunityMember(
+           @PathVariable Integer userId,
+           @PathVariable(required = false) Long communityId,
+           @RequestBody CreateCommunityDTO createCommunityDTO) {
 
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        // Call the service method to unjoin the user from the community
+        CommunityMember unjoinMember = communityMemberService.unjoinCommunityMember(userId, communityId);
 
-        Community existingCommunity = communityRepository.findById(communityId)
-                .orElseThrow(() -> new RuntimeException("Community not found"));
-
-        // Logic to update membership status based on updateRequest (if necessary)
-        // For instance, you might update membership status based on the updateRequest data
-
-        // Assuming updateCommunityStatusToZero updates the membership status to zero
-        communityRepository.updateCommunityStatusToZero(existingUser, existingCommunity.getCommunityID());
-
-        return ResponseEntity.ok("User membership in community updated successfully");
+        // Return the unjoined member and an HTTP status code indicating success
+        return new ResponseEntity<>(unjoinMember, HttpStatus.OK);
     }
+    
     
     //Function 30 Filter User based on Community 
     @GetMapping(value = "/get/userbycommunity/{user}")
