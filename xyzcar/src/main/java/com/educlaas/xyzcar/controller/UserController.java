@@ -32,14 +32,17 @@ public class UserController {
     @Autowired
     private FollowService followService;
 	
-	@PostMapping(value = "/users")
-	public void postUser(@RequestBody User user) {
-		userService.postUser(user);
-
+//	@PostMapping(value = "/users")
+//	public void postUser(@RequestBody User user) {
+//		userService.postUser(user);
+//
+//	}
+	
+	
 	// 1. Create user 
 	@PostMapping(value = "/create/users")
 	public void createUser(@RequestBody UserDTO userDTO) {
-		userService.registerUser(userDTO)
+		userService.registerUser(userDTO);
 	}
 	
 	// 2. Get user details
