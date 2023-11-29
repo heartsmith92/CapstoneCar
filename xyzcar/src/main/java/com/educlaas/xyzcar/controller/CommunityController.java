@@ -112,6 +112,14 @@ public class CommunityController {
         return ResponseEntity.ok("User membership in community updated successfully");
     }
     
+    //Function 30 Filter User based on Community 
+    @GetMapping(value = "/get/userbycommunity/{user}")
+    public List<Community> getUserByCommunity(@PathVariable Long user) {
+        String status = "1"; // Set the status to filter communities (e.g., "active", "inactive")
+        return CommunityService.listUserCommunitiesByStatus(user, status);
+	
+	   }
+    
 }
 	
 	

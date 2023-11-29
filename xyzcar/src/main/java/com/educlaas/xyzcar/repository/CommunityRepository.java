@@ -28,5 +28,9 @@ public interface CommunityRepository extends JpaRepository<Community, Long> {
 	@Modifying
     @Query("UPDATE Community cm SET cm.status = 0 WHERE cm.user = :user AND cm.communityID = :communityID")
     void updateCommunityStatusToZero(@Param("user") User user, @Param("communityID") Long long1);
+	
+	List<Community> findByUser(User user);
+
+    List<Community> findByUserAndStatus(User user, String status);
 
 }

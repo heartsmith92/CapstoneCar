@@ -79,9 +79,23 @@ public class CommunityService {
     
     //Function 30
     
-    public void listUserCommunities(Long userId) {
-    	
+    public List<Community> listUserCommunitiesByStatus(Long user, String status) {
+        // Step A: Validate user existence
+        User existingUser = userRepository.findById(user)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Step B: Retrieve communities by user and status
+        List<Community> userCommunities;
+        if (status != null && !status.isEmpty()) {
+            userCommunities = communityRepository.findByUserAndStatus(existingUser, status);
+        } else {
+            userCommunities = communityRepository.findByUser(existingUser);
+        }
+
+        return userCommunities;
     }
+    	
+  
     
     
     //Function 31
