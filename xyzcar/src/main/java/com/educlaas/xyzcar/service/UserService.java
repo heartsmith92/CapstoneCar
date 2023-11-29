@@ -91,5 +91,17 @@ public class UserService {
 	public User save(User updateUser) {
 	    return userRepository.save(updateUser);
 	}
+	
+    //Function 11
+    public static void followFriend(Long userId, Long friendId) {
+        FollowService.followFriend(userId, friendId);
+    }
+
+	
+	//Function 12
+    public static void unfollowFriend(Long userId, Long friendId) {
+        // Assuming you have a FollowService that handles unfollow logic
+        FollowService.unfollowFriend(userId, friendId);
+    }
 }
 
