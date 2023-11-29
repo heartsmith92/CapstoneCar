@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
-import com.educlaas.xyzcar.dto.PostDTO;
+import com.educlaas.xyzcar.dto.UpdatePostDTO;
 import com.educlaas.xyzcar.entity.Community;
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.User;
@@ -62,9 +62,12 @@ public class PostService {
 		}
 
 
+	//Function 13
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
+    
+
 
     public Optional<Post> getPostById(Long id) {
         return postRepository.findById(id);
@@ -74,29 +77,70 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    //Function 25
-    public void updateUserPost(Long userId, Long postId, PostDTO postDTO) {
-    	
-    	
+
+
+    // Function 25: Delete user post
+    public void deleteUserPost(Long userId, Long postId) {
+        // Validate user existence and post ownership
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // Check if the post belongs to the specified user
+        if (!existingPost.getUser().equals(existingUser)) {
+            throw new RuntimeException("User does not own the specified post");
+        }
+
+        // Soft delete the post by updating its status to 0 (or another value representing deleted)
+        existingPost.setStatus(0);
+        postRepository.save(existingPost);
+        
+    }
+    
+    public Optional<Post> getTargetUserID(Long id) {
+        return postRepository.findById(id);
     }
 
-    //Function 25 
-    public void deleteUserPost(Long userId , Long postId) {
-    	
-    	
+ // Function 24: Update user post
+    public Post updateUserPost(Long userId, Long postId, UpdatePostDTO updatePostDTO) {
+        // Validate user existence
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Retrieve the post to update
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // Update post fields with the values from the DTO
+        existingPost.setPostContent(updatePostDTO.getPostContent());
+        existingPost.setPostImgPath(updatePostDTO.getPostImgPath());
+        existingPost.setPostTitle(updatePostDTO.getPostTitle());
+        existingPost.setPostType(updatePostDTO.getPostType());
+        existingPost.setStatus(updatePostDTO.getStatus());
+
+        // Save the updated post in the database
+        Post updatedPost = postRepository.save(existingPost);
+
+        return updatedPost;
     }
 
+
+
     
-    //Function 15
-    public void filterPostsByStatus(int status) {
+    //Function 14
+    public List<Post> filterPostsByStatus(int status) {
+    	return postRepository.findByStatus(status);
     	
     }
     
-    // Function 22
+    // Function 22 
    
-    public void listUserPosts(Long userId) {
-    	
+    public List<Post> findPostsByUserIdAndStatus(Long userId, Integer status) {
+        return postRepository.findPostsByUserIdAndStatus(userId, status);
     }
+
 
     
     //Function 23 
