@@ -25,6 +25,8 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    
+    
     //Check If Email is taken 
     public boolean isEmailTaken(String email) {
         User user = userRepository.findByEmail(email);
@@ -92,16 +94,16 @@ public class UserService {
 	    return userRepository.save(updateUser);
 	}
 	
-    //Function 11
-    public static void followFriend(Long userId, Long friendId) {
-        FollowService.followFriend(userId, friendId);
-    }
-
-	
-	//Function 12
-    public static void unfollowFriend(Long userId, Long friendId) {
-        // Assuming you have a FollowService that handles unfollow logic
-        FollowService.unfollowFriend(userId, friendId);
-    }
+//    //Function 11
+//    public static void followFriend(Long userId, Long friendId) {
+//        FollowService.followFriend(userId, friendId);
+//    }
+//
+//	
+//	//Function 12
+//    public static void unfollowFriend(Long userId, Long friendId) {
+//        // Assuming you have a FollowService that handles unfollow logic
+//        FollowService.unfollowFriend(userId, friendId);
+//    }
 }
 
