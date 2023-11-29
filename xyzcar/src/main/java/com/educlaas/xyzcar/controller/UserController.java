@@ -106,16 +106,16 @@ public class UserController {
         return followService.searchFriends(query);
     }
 
-    // Function 11: Follow Friend
-    @PostMapping(value = "/users/{userId}/follow/{friendId}")
-    public void followFriend(@PathVariable Long userId, @PathVariable Long friendId) {
-        FollowService.followFriend(userId, friendId);
-    }
-
-    // Function 12: Unfollow Friend
-    @DeleteMapping(value = "/users/{userId}/unfollow/{friendId}")
-    public void unfollowFriend(@PathVariable Long userId, @PathVariable Long friendId) {
-        followService.unfollowFriend(userId, friendId);
-    }
+//    // Function 11: Follow Friend
+//    @PostMapping(value = "/users/{userId}/follow/{friendId}")
+//    public void followFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+//        FollowService.followFriend(userId, friendId);
+//    }
+//
+//    // Function 12: Unfollow Friend
+//    @DeleteMapping(value = "/users/{userId}/unfollow/{friendId}")
+//    public void unfollowFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+//        followService.unfollowFriend(userId, friendId);
+//    }
 
 }
