@@ -29,7 +29,6 @@ import com.educlaas.xyzcar.service.PostService;
 import com.educlaas.xyzcar.service.ShareService;
 
 
-
 @RestController
 @RequestMapping("/community")
 @CrossOrigin(origins = "http://localhost:3000")  
