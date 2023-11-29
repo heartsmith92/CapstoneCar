@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.dto.CreateCommunityDTO;
 import com.educlaas.xyzcar.entity.Community;
+import com.educlaas.xyzcar.entity.CommunityMember;
 import com.educlaas.xyzcar.entity.LikeEntity;
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.User;
+import com.educlaas.xyzcar.repository.CommunityMemberRepository;
 import com.educlaas.xyzcar.repository.CommunityRepository;
 import com.educlaas.xyzcar.repository.UserRepository;
 import com.educlaas.xyzcar.dto.CreatePostDTO;
@@ -24,6 +26,9 @@ public class CommunityService {
 	
 	 @Autowired
 	 private UserRepository userRepository;    
+	 
+	 @Autowired
+	 private CommunityMemberRepository communityMemberRepository;
 	 
 	
 	 
@@ -118,14 +123,24 @@ public class CommunityService {
     
     
     //Function 35
-    public void unjoinCommunity(Long userId , Long communityId) {
-    	
-    	
+    public Community unjoinCommunity(Long userId, CreateCommunityDTO createCommunityDTO, Long communityId) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (communityId != null) {
+            Community existingCommunity = communityRepository.findById(communityId)
+                    .orElseThrow(() -> new RuntimeException("Community member not found"));
+
+            // Update the status of the existing membership to 0 based on user and community
+            communityRepository.updateCommunityStatusToZero(existingUser, existingCommunity.getCommunityID());
+            
+            // Rest of your logic
+        } else {
+            throw new RuntimeException("Invalid Community ID");
+        }
+		return null;
     }
-
-	
-    
-    
-
-	
 }
+	
+    
+    

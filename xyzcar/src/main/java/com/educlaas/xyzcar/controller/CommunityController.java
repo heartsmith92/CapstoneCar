@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,9 @@ import com.educlaas.xyzcar.dto.CreatePostDTO;
 import com.educlaas.xyzcar.entity.Community;
 import com.educlaas.xyzcar.entity.CommunityMember;
 import com.educlaas.xyzcar.entity.Post;
+import com.educlaas.xyzcar.entity.User;
+import com.educlaas.xyzcar.repository.CommunityRepository;
+import com.educlaas.xyzcar.repository.UserRepository;
 import com.educlaas.xyzcar.service.CommunityMemberService;
 import com.educlaas.xyzcar.service.CommunityService;
 
@@ -31,6 +35,12 @@ public class CommunityController {
 	   
 	   @Autowired
 	    private CommunityMemberService communityMemberService;
+	   
+	   @Autowired
+	    private CommunityRepository communityRepository;
+	   
+	   @Autowired
+	   private UserRepository userRepository;
 	   
 	  
 	        
@@ -80,6 +90,28 @@ public class CommunityController {
 	       // Return the created post and a HTTP status code indicating success
 	       return new ResponseEntity<>(createMember, HttpStatus.CREATED);
 	   }
+    //Function 34
+    @PutMapping("/unjoin/{userId}/{communityId}")
+    public ResponseEntity<String> updateUserMembership(
+            @PathVariable Long userId,
+            @PathVariable Long communityId,
+            @RequestBody CreateCommunityDTO CreateCommunityDTO) {
+
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Community existingCommunity = communityRepository.findById(communityId)
+                .orElseThrow(() -> new RuntimeException("Community not found"));
+
+        // Logic to update membership status based on updateRequest (if necessary)
+        // For instance, you might update membership status based on the updateRequest data
+
+        // Assuming updateCommunityStatusToZero updates the membership status to zero
+        communityRepository.updateCommunityStatusToZero(existingUser, existingCommunity.getCommunityID());
+
+        return ResponseEntity.ok("User membership in community updated successfully");
+    }
+    
 }
 	
 	
