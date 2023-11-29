@@ -2,12 +2,15 @@ package com.educlaas.xyzcar.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.entity.Follow;
+import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.FollowRepository;
+import com.educlaas.xyzcar.repository.UserRepository;
 
 @Service
 public class FollowService {
@@ -35,27 +38,50 @@ public class FollowService {
         followRepository.deleteById(id);
     }
     
-    //Function 9
-    public void listFollowedFriends(Long userId) {}
+    //Function 8 
+    public List<User> listFollowedFriends(Long userId) {
+        List<Follow> follows = followRepository.findByUserId(userId);
+        
+        List<User> followedFriends = follows.stream()
+                .map(Follow::getUser)
+                .collect(Collectors.toList());
+        
+        return followedFriends;
+    }
+
     
-    //Function 10
-    public void filterFriendsByStatus(Long userId , int status) {}
-    
-    
-    //Function 11
-    public void searchFriends(String query) {
-    	
+    //Function 9 
+    public List<User> filterFriendsByStatus(Long userId, int status) {
+        List<Follow> follows = followRepository.findByUserIdAndStatus(userId, status);
+        
+        List<User> friendsWithStatus = follows.stream()
+                .map(Follow::getUser)
+                .collect(Collectors.toList());
+        
+        return friendsWithStatus;
     }
     
-    //Function 12
-	public void followFriend(Long userId , Long friendId) {
-		
-	}
+    
+    //Function 10
+    public List<User> searchFriends(String query) {
+    	List<User> foundFriends = UserRepository.findByUsernameContainingIgnoreCase(query);
+        
+        return foundFriends;
+    }
+
+    
+    //Function 11
+    public static void followFriend(Long userId, Long friendId) {
+        FollowService.followFriend(userId, friendId);
+    }
+
 	
-	//Function 13
-	public void unfollowFriend(Long userId , Long friendId) {
-		
-	}
+	//Function 12
+    public static void unfollowFriend(Long userId, Long friendId) {
+        // Assuming you have a FollowService that handles unfollow logic
+        FollowService.unfollowFriend(userId, friendId);
+    }
+
 	
 	
 }
