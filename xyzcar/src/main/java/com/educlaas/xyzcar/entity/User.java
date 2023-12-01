@@ -17,7 +17,7 @@ public class User {
     @Column(name = "userID")
     private Long id;
 
-    @Column(name = "username", length = 50, unique = true) // Assuming usernames should be unique
+    @Column(name = "username", length = 50)
     private String username;
 
     @Column(name = "firstName", length = 50)
@@ -29,7 +29,7 @@ public class User {
     @Column(name = "password", length = 255)
     private String password;
 
-    @Column(name = "email", length = 100)
+    @Column(name = "email", length = 100, unique = true)
     private String email;
 
     @Column(name = "userType", length = 20)
@@ -37,7 +37,7 @@ public class User {
 
     @Column(name = "createdDate")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate; // Change the type to java.util.Date
+    private Date createdDate = new Date(); // Change the type to java.util.Date
 
 
     @Column(name = "userBio", length = 255)

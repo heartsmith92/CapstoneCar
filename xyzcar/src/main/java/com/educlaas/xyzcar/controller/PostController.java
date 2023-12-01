@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,16 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.dto.CreatePostDTO;
-import com.educlaas.xyzcar.dto.PostDTO;
+import com.educlaas.xyzcar.dto.UpdatePostDTO;
 import com.educlaas.xyzcar.entity.Comment;
 import com.educlaas.xyzcar.entity.LikeEntity;
+
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.Share;
 import com.educlaas.xyzcar.service.CommentService;
 import com.educlaas.xyzcar.service.LikeEntityService;
 import com.educlaas.xyzcar.service.PostService;
 import com.educlaas.xyzcar.service.ShareService;
-
 
 
 @RestController
@@ -72,6 +73,51 @@ public class PostController {
 			return postService.getPostById(postId);
 		}
 	    
+	    
+	    // Function 25: Delete user post
+	    @DeleteMapping("/delete/post/{userId}/{postId}")
+	    public ResponseEntity<Void> deleteUserPost(
+	            @PathVariable Long userId,
+	            @PathVariable Long postId) {
+
+	        // Call the service method to delete the post
+	        postService.deleteUserPost(userId, postId);
+
+	        // Return a HTTP status code indicating success
+	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    }	    
+	 // Function 14: Filter posts by status
+	    @GetMapping("/filter/posts/{status}")
+	    public List<Post> filterPostsByStatus(@PathVariable int status) {
+	        return postService.filterPostsByStatus(status);
+	    }
+
+	    
+	 // Function 22: List user posts with optional status
+	    @GetMapping("/get/posts/user/{userId}/{status}")
+	    public List<Post> listUserPosts(
+	            @PathVariable Long userId,
+	            @PathVariable  Integer status) {
+	        return postService.findPostsByUserIdAndStatus(userId, status);
+	    }
+
+
+	 // Function 24: Update user post
+	    @PutMapping("/update/post/{userId}/{postId}")
+	    public ResponseEntity<Post> updateUserPost(
+	            @PathVariable Long userId,
+	            @PathVariable Long postId,
+	            @RequestBody UpdatePostDTO updatePostDTO) {
+
+	        // Call the service method to update the post
+	        Post updatedPost = postService.updateUserPost(userId, postId, updatePostDTO);
+
+	        // Return the updated post and a HTTP status code indicating success
+	        return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+	    }
+
+	    
+
 	    @PostMapping("/addLikesToPost/{userId}/{postId}")
 	    public ResponseEntity<LikeEntity> addLikesToPost(
 	            @PathVariable Integer userId,
@@ -114,8 +160,10 @@ public class PostController {
 	            @PathVariable Integer userId,
 	            @PathVariable Long postId) {
 
+
 	        // Call the service method to create a new like
 	        LikeEntity createdDisLike = LikeEntityService.addDisLikesToPost(userId, postId);
+
 
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createdDisLike, HttpStatus.CREATED);
