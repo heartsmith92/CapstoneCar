@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.dto.CreateCommunityDTO;
@@ -97,20 +98,28 @@ public class CommunityController {
             @PathVariable Long communityId,
             @RequestBody CreateCommunityDTO CreateCommunityDTO) {
 
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    @PostMapping("/unjoin/communitymember/{userId}/{communityId}")
+    public ResponseEntity<CommunityMember> unjoinCommunityMember(
+           @PathVariable Integer userId,
+           @PathVariable(required = false) Long communityId,
+           @RequestBody CreateCommunityDTO createCommunityDTO) {
 
-        Community existingCommunity = communityRepository.findById(communityId)
-                .orElseThrow(() -> new RuntimeException("Community not found"));
 
-        // Logic to update membership status based on updateRequest (if necessary)
-        // For instance, you might update membership status based on the updateRequest data
+        // Call the service method to unjoin the user from the community
+        CommunityMember unjoinMember = communityMemberService.unjoinCommunityMember(userId, communityId);
 
-        // Assuming updateCommunityStatusToZero updates the membership status to zero
-        communityRepository.updateCommunityStatusToZero(existingUser, existingCommunity.getCommunityID());
-
-        return ResponseEntity.ok("User membership in community updated successfully");
+        // Return the unjoined member and an HTTP status code indicating success
+        return new ResponseEntity<>(unjoinMember, HttpStatus.OK);
     }
+    
+    
+    //Function 30 Filter User based on Community 
+    @GetMapping(value = "/get/userbycommunity/{user}")
+    public List<Community> getUserByCommunity(@PathVariable Long user) {
+        String status = "1"; // Set the status to filter communities (e.g., "active", "inactive")
+        return CommunityService.listUserCommunitiesByStatus(user, status);
+	
+	   }
     
 }
 	
