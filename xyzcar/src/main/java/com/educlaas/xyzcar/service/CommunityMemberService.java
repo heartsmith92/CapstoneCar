@@ -63,4 +63,34 @@ public class CommunityMemberService {
     public void deleteCommunityMember(Long id) {
         communityMemberRepository.deleteById(id);
     }
+    
+  //Function 35
+    public CommunityMember unjoinCommunityMember(Integer userId, Long communityID) {
+        Optional<Community> communityOptional = communityRepository.findById(communityID);
+        Community community = communityOptional.orElseThrow(() -> new RuntimeException("Community not found"));
+
+        User existingUser = community.getUser();
+
+        if (existingUser == null) {
+            throw new RuntimeException("User associated with the community not found");
+        }
+
+        // Find the existing membership
+        CommunityMember existingMembership = communityMemberRepository.findByUserAndCommunity(existingUser, community);
+
+        if (existingMembership != null) {
+            // Update the status of the existing membership to 0
+            existingMembership.setStatus(0);
+            existingMembership.setCreatedDate(new Date()); // Update created date if needed
+            // You might want to set other fields if necessary
+
+            // Save the updated membership
+            CommunityMember unjoinMember = communityMemberRepository.save(existingMembership);
+
+            return unjoinMember;
+        } else {
+            throw new RuntimeException("User is not a member of this community");
+        }
+    
+}
 }
