@@ -47,7 +47,7 @@ public class CommunityController {
 	        
 	        
 	//function 31
-	@PostMapping("/create/community/{userId}")
+	@PostMapping("/create/{userId}/community")
 	   public ResponseEntity<Community> createCommunity(
 	           @PathVariable Long userId,
 	           @PathVariable(required = false) Long communityId,
@@ -62,13 +62,13 @@ public class CommunityController {
 	
 	
 	//Function 5 Get All Post
-    @GetMapping(value = "/get/community")
+    @GetMapping(value = "/get/communities")
 	public List<Community> getCommunity(){
 		return CommunityService.findAllCommunity();
 	}
     
     //Function 6 Filter Community by Status=1
-    @GetMapping(value = "/get/commbystatus")
+    @GetMapping(value = "/get/communities/active")
     public List<Community> getCommunitybyStatus() {
         
         Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
@@ -78,7 +78,7 @@ public class CommunityController {
 	   }
     
     //Function 7
-    @PostMapping("/create/communitymember/{userId}/{communityId}")
+    @PostMapping("/member/join/{userId}/{communityId}")
 	   public ResponseEntity<CommunityMember> createCommunityMember(
 	           @PathVariable Integer userId,
 	           @PathVariable(required = false) Long communityId,
@@ -92,11 +92,18 @@ public class CommunityController {
 	       return new ResponseEntity<>(createMember, HttpStatus.CREATED);
 	   }
     //Function 34
+    @PutMapping("/member/unjoin/{userId}/{communityId}")
+    public ResponseEntity<String> updateUserMembership(
+            @PathVariable Long userId,
+            @PathVariable Long communityId,
+            @RequestBody CreateCommunityDTO CreateCommunityDTO) {
+
     @PostMapping("/unjoin/communitymember/{userId}/{communityId}")
     public ResponseEntity<CommunityMember> unjoinCommunityMember(
            @PathVariable Integer userId,
            @PathVariable(required = false) Long communityId,
            @RequestBody CreateCommunityDTO createCommunityDTO) {
+
 
         // Call the service method to unjoin the user from the community
         CommunityMember unjoinMember = communityMemberService.unjoinCommunityMember(userId, communityId);

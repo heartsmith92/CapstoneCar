@@ -59,7 +59,7 @@ public class NotificationController {
     
     
     // Function 20: Get post tabulation (likes, comments, shares)
-    @GetMapping("/get/post/tabulation/{postId}")
+    @GetMapping("/post/get/tabulation/{postId}")
     public ResponseEntity<Map<String, Long>> getPostTabulation(@PathVariable Long postId) {
 
         // Call the service method to get post tabulation
@@ -72,7 +72,7 @@ public class NotificationController {
 
     
 
-    @PostMapping("/addLikesToNL/{userId}/{postId}/{targetUserId}/{notificationType}")
+    @PostMapping("/notification/add-like/{userId}/{postId}/{targetUserId}/{notificationType}")
     public ResponseEntity<NotificationLog> addLikesToNL(@PathVariable Long userId,
                                                         @PathVariable Long postId,
                                                         @PathVariable Integer targetUserId,
@@ -88,7 +88,7 @@ public class NotificationController {
         return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
     }
     
-    @PostMapping("/shareToNL/{userId}/{postId}/{targetUserId}/{notificationType}")
+    @PostMapping("/notification/share/{userId}/{postId}/{targetUserId}/{notificationType}")
     public ResponseEntity<NotificationLog> shareToNL(@PathVariable Long userId,
                                                         @PathVariable Long postId,
                                                         @PathVariable Integer targetUserId,
@@ -104,7 +104,7 @@ public class NotificationController {
         return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
     }
     
-    @PostMapping("/commentToNL/{userId}/{postId}/{targetUserId}/{notificationType}")
+    @PostMapping("/notification/comment/{userId}/{postId}/{targetUserId}/{notificationType}")
     public ResponseEntity<NotificationLog> commentToNL(@PathVariable Long userId,
                                                         @PathVariable Long postId,
                                                         @PathVariable Integer targetUserId,
@@ -121,7 +121,7 @@ public class NotificationController {
     }
     
     //Function 7
-    @PostMapping("/memberToNL/{userId}/{communityId}/{targetUserId}/{notificationType}")
+    @PostMapping("/notification/member/{userId}/{communityId}/{targetUserId}/{notificationType}")
     public ResponseEntity<NotificationLog> memberToNL(@PathVariable Long userId,
                                                         @PathVariable Long communityId,
                                                         @PathVariable Integer targetUserId,
