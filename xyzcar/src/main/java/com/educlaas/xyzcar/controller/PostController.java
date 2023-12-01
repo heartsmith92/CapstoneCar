@@ -46,7 +46,7 @@ public class PostController {
 	   private CommentService CommentService;
 	   
 	   
-	   @PostMapping("/create/post/{userId}/{communityId}")
+	   @PostMapping("/post/create/{userId}/{communityId}")
 	   public ResponseEntity<Post> createPost(
 	           @PathVariable Long userId,
 	           @PathVariable(required = false) Long communityId,
@@ -61,21 +61,21 @@ public class PostController {
 
 	    
 	    //Get All Post
-	    @GetMapping(value = "/get/posts")
+	    @GetMapping(value = "/post/get")
 		public List<Post> getPost(){
 			return postService.getAllPosts();
 		}
 	    
 	    
 	    //GetSpecificPost
-	    @GetMapping(value = "/get/post/{postId}")
+	    @GetMapping(value = "/post/get/{postId}")
 		public Optional<Post> getPostById(@PathVariable Long postId){
 			return postService.getPostById(postId);
 		}
 	    
 	    
 	    // Function 25: Delete user post
-	    @DeleteMapping("/delete/post/{userId}/{postId}")
+	    @DeleteMapping("/post/delete/{userId}/{postId}")
 	    public ResponseEntity<Void> deleteUserPost(
 	            @PathVariable Long userId,
 	            @PathVariable Long postId) {
@@ -87,14 +87,14 @@ public class PostController {
 	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	    }	    
 	 // Function 14: Filter posts by status
-	    @GetMapping("/filter/posts/{status}")
+	    @GetMapping("/post/filter/{status}")
 	    public List<Post> filterPostsByStatus(@PathVariable int status) {
 	        return postService.filterPostsByStatus(status);
 	    }
 
 	    
 	 // Function 22: List user posts with optional status
-	    @GetMapping("/get/posts/user/{userId}/{status}")
+	    @GetMapping("/post/get/user/{userId}/{status}")
 	    public List<Post> listUserPosts(
 	            @PathVariable Long userId,
 	            @PathVariable  Integer status) {
@@ -103,7 +103,7 @@ public class PostController {
 
 
 	 // Function 24: Update user post
-	    @PutMapping("/update/post/{userId}/{postId}")
+	    @PutMapping("/post/update/{userId}/{postId}")
 	    public ResponseEntity<Post> updateUserPost(
 	            @PathVariable Long userId,
 	            @PathVariable Long postId,
@@ -118,7 +118,7 @@ public class PostController {
 
 	    
 
-	    @PostMapping("/addLikesToPost/{userId}/{postId}")
+	    @PostMapping("/post/add-like/{userId}/{postId}")
 	    public ResponseEntity<LikeEntity> addLikesToPost(
 	            @PathVariable Integer userId,
 	            @PathVariable Long postId) {
@@ -131,7 +131,7 @@ public class PostController {
 	    }
 	   
 	    //Function 26 Get All Likes where status =1 
-	    @GetMapping(value = "/get/likes/{user}")
+	    @GetMapping(value = "/post/get/likes/{user}")
 	    public List<Post> getlikedPosts() {
 	        Long userId = 1L; // Replace this with the actual user ID you want to query for
 	        Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
@@ -140,7 +140,7 @@ public class PostController {
 		}
 	    
 	  //Function 27 Get All DisLikes where status=0
-	    @GetMapping(value = "/get/dislikes/{user}")
+	    @GetMapping(value = "/post/get/dislikes/{user}")
 	    public List<Post> getDislikedPosts() {
 	        Long userId = 1L; // Replace this with the actual user ID you want to query for
 	        Integer status = 0; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
@@ -149,13 +149,13 @@ public class PostController {
 		}
 	    
 	    //GetSpecificLikes
-	    @GetMapping(value = "/get/posts/{likeId}")
+	    @GetMapping(value = "/post/get/posts/{likeId}")
 		public Optional<LikeEntity> getLikeById(@PathVariable Long likeId){
 			return LikeEntityService.getLikeById(likeId);
 		}
 	    
 	    //Function 17 
-	    @PostMapping("/addDisLikesToPost/{userId}/{postId}")
+	    @PostMapping("/post/add-dislike/{userId}/{postId}")
 	    public ResponseEntity<LikeEntity> addDisLikesToPost(
 	            @PathVariable Integer userId,
 	            @PathVariable Long postId) {
@@ -170,7 +170,7 @@ public class PostController {
 	    }
 	    
 	    //Function 19 Share add to table 
-	    @PostMapping("/sharePost/{userId}/{postId}")
+	    @PostMapping("/post/share/{userId}/{postId}")
 	    public ResponseEntity<Share> share(
 	            @PathVariable Integer userId,
 	            @PathVariable Long postId) {
@@ -183,7 +183,7 @@ public class PostController {
 	    }
 	 
 	  //Function 18 Share add to table 
-	    @PostMapping("/commentOnPost/{userId}/{postId}")
+	    @PostMapping("post/comment/{userId}/{postId}")
 	    public ResponseEntity<Comment> comment(
 	            @PathVariable Integer userId,
 	            @PathVariable Long postId) {
@@ -196,7 +196,7 @@ public class PostController {
 	    }
 	    
 	    //Function 28 list all comment
-	    @GetMapping(value = "/get/comment/{user}")
+	    @GetMapping(value = "/post/get/comment/{user}")
 	    public List<Post> getComment() {
 	        Long userId = 1L; // Replace this with the actual user ID you want to query for
 	        Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
@@ -206,4 +206,4 @@ public class PostController {
 }
 
 
-    // Add other methods for handling post-related endpoints
+    
