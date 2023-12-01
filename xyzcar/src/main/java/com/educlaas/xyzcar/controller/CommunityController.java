@@ -92,13 +92,7 @@ public class CommunityController {
 	       return new ResponseEntity<>(createMember, HttpStatus.CREATED);
 	   }
     //Function 34
-    @PutMapping("/member/unjoin/{userId}/{communityId}")
-    public ResponseEntity<String> updateUserMembership(
-            @PathVariable Long userId,
-            @PathVariable Long communityId,
-            @RequestBody CreateCommunityDTO CreateCommunityDTO) {
-
-    @PostMapping("/unjoin/communitymember/{userId}/{communityId}")
+    @PostMapping("/member/unjoin/{userId}/{communityId}")
     public ResponseEntity<CommunityMember> unjoinCommunityMember(
            @PathVariable Integer userId,
            @PathVariable(required = false) Long communityId,
