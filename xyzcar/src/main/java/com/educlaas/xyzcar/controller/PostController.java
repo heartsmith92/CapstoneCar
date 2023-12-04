@@ -117,7 +117,7 @@ public class PostController {
 	    }
 
 	    
-
+//Function 16
 	    @PostMapping("/post/add-like/{userId}/{postId}")
 	    public ResponseEntity<LikeEntity> addLikesToPost(
 	            @PathVariable Integer userId,
@@ -181,19 +181,20 @@ public class PostController {
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createShare, HttpStatus.CREATED);
 	    }
-	 
-	  //Function 18 Share add to table 
-	    @PostMapping("post/comment/{userId}/{postId}")
+	    //Function 18 Share add to table 
+	    @PostMapping("post/comment/{userId}/{postId}/{commentText}")
 	    public ResponseEntity<Comment> comment(
 	            @PathVariable Integer userId,
-	            @PathVariable Long postId) {
+	            @PathVariable Long postId,
+	            @PathVariable String commentText){
 
 	        // Call the service method to create a new like
-	        Comment createComment = CommentService.commentOnPost(userId, postId);
+	        Comment createComment = CommentService.commentOnPost(userId, postId,commentText);
 
 	        // Return the updated post and a HTTP status code indicating success
 	        return new ResponseEntity<>(createComment, HttpStatus.CREATED);
 	    }
+	 
 	    
 	    //Function 28 list all comment
 	    @GetMapping(value = "/post/get/comment/{user}")

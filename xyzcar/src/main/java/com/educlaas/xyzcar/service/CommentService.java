@@ -46,9 +46,8 @@ public class CommentService {
     public void deleteCommentTest(Long id) {
         
     }
-    
     //Function 18
-    public Comment commentOnPost(Integer userId, Long postId){
+    public Comment commentOnPost(Integer userId, Long postId,String commentText){
     	if (commentRepository == null) {
             // Log or print a message to indicate the null state
             System.out.println("CommentRepository is null");
@@ -70,7 +69,7 @@ public class CommentService {
         Comment comment = new Comment();
         comment.setCreatedDate(new Date());
         comment.setStatus(1);
-        comment.setComment("test");
+        comment.setComment(commentText);
         comment.setUser(existingUser); // Set the existing user associated with the post
         comment.setPost(post);
 
@@ -81,6 +80,7 @@ public class CommentService {
         return createComment; // Return the updated post
     	
     }
+  
     
     //Function 28 
     public List<Post> listComment(Long userId, Integer status) {
