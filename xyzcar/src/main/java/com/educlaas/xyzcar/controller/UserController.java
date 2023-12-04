@@ -35,11 +35,12 @@ public class UserController {
 	@PostMapping(value = "/users")
 	public void postUser(@RequestBody User user) {
 		userService.postUser(user);
+	}
 
 	// 1. Create user 
 	@PostMapping(value = "/create/users")
 	public void createUser(@RequestBody UserDTO userDTO) {
-		userService.registerUser(userDTO)
+		userService.registerUser(userDTO);
 	}
 	
 	// 2. Get user details
@@ -106,13 +107,13 @@ public class UserController {
     // Function 11: Follow Friend
     @PostMapping(value = "/users/{userId}/follow/{friendId}")
     public void followFriend(@PathVariable Long userId, @PathVariable Long friendId) {
-        FollowService.followFriend(userId, friendId);
+        UserService.followFriend(userId, friendId);
     }
 
     // Function 12: Unfollow Friend
     @DeleteMapping(value = "/users/{userId}/unfollow/{friendId}")
     public void unfollowFriend(@PathVariable Long userId, @PathVariable Long friendId) {
-        followService.unfollowFriend(userId, friendId);
+        UserService.unfollowFriend(userId, friendId);
     }
 
 }

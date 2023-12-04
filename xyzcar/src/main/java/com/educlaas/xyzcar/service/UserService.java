@@ -94,14 +94,19 @@ public class UserService {
 	
     //Function 11
     public static void followFriend(Long userId, Long friendId) {
-        FollowService.followFriend(userId, friendId);
+        UserService.followFriend(userId, friendId);
     }
 
 	
 	//Function 12
     public static void unfollowFriend(Long userId, Long friendId) {
         // Assuming you have a FollowService that handles unfollow logic
-        FollowService.unfollowFriend(userId, friendId);
+        UserService.unfollowFriend(userId, friendId);
     }
+
+	public void postUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
