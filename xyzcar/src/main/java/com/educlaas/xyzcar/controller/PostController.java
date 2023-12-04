@@ -172,7 +172,7 @@ public class PostController {
 	    //Function 19 Share add to table 
 	    @PostMapping("/post/share/{userId}/{postId}")
 	    public ResponseEntity<Share> share(
-	            @PathVariable Integer userId,
+	            @PathVariable Long userId,
 	            @PathVariable Long postId) {
 
 	        // Call the service method to create a new like
