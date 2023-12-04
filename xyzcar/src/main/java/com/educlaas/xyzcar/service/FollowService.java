@@ -69,6 +69,14 @@ public class FollowService {
         return foundFriends;
     }
     
+    //Function 12
+    public void deleteFollowByUserAndFriend(User user, User friend) {
+        List<Follow> follows = FollowRepository.findByUserAndFriend(user, friend);
+        
+        if (follows != null) {
+            follows.forEach(followRepository::delete);
+        }
+    }
 
 
 	
