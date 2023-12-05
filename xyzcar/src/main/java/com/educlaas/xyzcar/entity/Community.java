@@ -35,7 +35,7 @@ public class Community {
     @Column(name = "communityName", length = 45)
     private String communityName;
 
-    @Column(name = "communityBio", length = 45)
+    @Column(name = "communityBio", length = 255)
     private String communityBio;
 
     @Column(name = "createdDate", length = 45)
