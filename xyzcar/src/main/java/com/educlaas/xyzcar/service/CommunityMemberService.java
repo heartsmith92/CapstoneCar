@@ -74,9 +74,12 @@ public class CommunityMemberService {
         if (existingUser == null) {
             throw new RuntimeException("User associated with the community not found");
         }
+        
+        // deafult checking
+        long statusOne = 1;
 
         // Find the existing membership
-        CommunityMember existingMembership = communityMemberRepository.findByUserAndCommunity(existingUser, community);
+        CommunityMember existingMembership = communityMemberRepository.findByUserAndCommunityAndStatus(existingUser, community, statusOne);
 
         if (existingMembership != null) {
             // Update the status of the existing membership to 0
