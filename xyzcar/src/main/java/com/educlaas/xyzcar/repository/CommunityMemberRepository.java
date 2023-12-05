@@ -15,7 +15,7 @@ public interface CommunityMemberRepository extends JpaRepository<CommunityMember
 	Optional<CommunityMember> findById(Long communityID);
 	Community save(Community community);
 	
-	CommunityMember findByUserAndCommunity(User user, Community community);
+	CommunityMember findByUserAndCommunityAndStatus(User user, Community community, Long status);
 	
 	
 }

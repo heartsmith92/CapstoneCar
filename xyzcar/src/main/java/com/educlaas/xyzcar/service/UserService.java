@@ -101,6 +101,7 @@ public class UserService {
 	}
 	
 
+
 	// Function 11: Follow Friend
 	public void followFriend(Long userId, Long friendId) {
 	    Optional<User> user = userRepository.findById(userId);
@@ -116,6 +117,27 @@ public class UserService {
 	        throw new RuntimeException("User or friend not found with the given IDs.");
 	    }
 	}
+
+
+//    // Function 11: Follow Friend
+//    public void followFriend(Long userId, Long friendId) {
+//        Optional<User> user = userRepository.findById(userId);
+//        Optional<User> friend = userRepository.findById(friendId);
+//
+//        if (user.isPresent() && friend.isPresent()) {
+//            Follow follow = new Follow();
+//            follow.setUser(user.get());
+//            follow.setFriendID(friend.get());
+//
+//            
+//            follow.setStatus(null/* set the default status or any other logic */);
+//            followService.createFollow(follow);
+//        } else {
+//            throw new RuntimeException("User or friend not found with the given IDs.");
+//        }
+//    }
+//	
+	
 
 
     // Function 12: Unfollow Friend

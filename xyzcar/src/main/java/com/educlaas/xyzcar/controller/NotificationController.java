@@ -136,4 +136,14 @@ public class NotificationController {
 
         return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
     }
+    
+    
+    // Function to get notification logs by fk_userid
+    @GetMapping("/notificationLogs/{fkUserId}")
+    public ResponseEntity<List<NotificationLog>> getNotificationLogsByFkUserId(@PathVariable Long fkUserId) {
+        List<NotificationLog> notificationLogs = notificationLogService.getNotificationLogsByFkUserId(fkUserId);
+
+        // Return the filtered notification logs and a HTTP status code indicating success
+        return new ResponseEntity<>(notificationLogs, HttpStatus.OK);
+    }
 }
