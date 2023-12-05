@@ -12,7 +12,6 @@ import com.educlaas.xyzcar.config.JwtTokenProvider;
 import com.educlaas.xyzcar.dto.UserDTO;
 import com.educlaas.xyzcar.entity.Follow;
 import com.educlaas.xyzcar.entity.User;
-import com.educlaas.xyzcar.repository.FollowRepository;
 import com.educlaas.xyzcar.repository.UserRepository;
 
 @Service
@@ -102,21 +101,22 @@ public class UserService {
 	}
 	
 
-    // Function 11: Follow Friend
-    public void followFriend(Long userId, Long friendId) {
-        Optional<User> user = userRepository.findById(userId);
-        Optional<User> friend = userRepository.findById(friendId);
+	// Function 11: Follow Friend
+	public void followFriend(Long userId, Long friendId) {
+	    Optional<User> user = userRepository.findById(userId);
+	    Optional<User> friend = userRepository.findById(friendId);
 
-        if (user.isPresent() && friend.isPresent()) {
-            Follow follow = new Follow();
-            follow.setUser(user.get());
-            follow.setFriendID(friend.get());
-            follow.setStatus(null/* set the default status or any other logic */);
-            followService.createFollow(follow);
-        } else {
-            throw new RuntimeException("User or friend not found with the given IDs.");
-        }
-    }
+	    if (user.isPresent() && friend.isPresent()) {
+	        Follow follow = new Follow();
+	        follow.setUser(user.get());
+	        follow.setFriend(friend.get()); // Corrected line
+	        follow.setStatus(null/* set the default status or any other logic */);
+	        followService.createFollow(follow);
+	    } else {
+	        throw new RuntimeException("User or friend not found with the given IDs.");
+	    }
+	}
+
 
     // Function 12: Unfollow Friend
     public void unfollowFriend(Long userId, Long friendId) {
@@ -131,18 +131,6 @@ public class UserService {
     }
 
     
-
-//    //Function 11
-//    public static void followFriend(Long userId, Long friendId) {
-//        FollowService.followFriend(userId, friendId);
-//    }
-//
-//	
-//	//Function 12
-//    public static void unfollowFriend(Long userId, Long friendId) {
-//        // Assuming you have a FollowService that handles unfollow logic
-//        FollowService.unfollowFriend(userId, friendId);
-//    }
 
 }
 
