@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.educlaas.xyzcar.config.JwtTokenProvider;
 import com.educlaas.xyzcar.dto.UserDTO;
+import com.educlaas.xyzcar.entity.Follow;
 import com.educlaas.xyzcar.entity.User;
+import com.educlaas.xyzcar.repository.FollowRepository;
 import com.educlaas.xyzcar.repository.UserRepository;
 
 @Service
@@ -25,7 +27,12 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+
+    @Autowired
+    private FollowService followService;  
+
     
+
     
     //Check If Email is taken 
     public boolean isEmailTaken(String email) {
@@ -94,6 +101,37 @@ public class UserService {
 	    return userRepository.save(updateUser);
 	}
 	
+
+    // Function 11: Follow Friend
+    public void followFriend(Long userId, Long friendId) {
+        Optional<User> user = userRepository.findById(userId);
+        Optional<User> friend = userRepository.findById(friendId);
+
+        if (user.isPresent() && friend.isPresent()) {
+            Follow follow = new Follow();
+            follow.setUser(user.get());
+            follow.setFriendID(friend.get());
+            follow.setStatus(null/* set the default status or any other logic */);
+            followService.createFollow(follow);
+        } else {
+            throw new RuntimeException("User or friend not found with the given IDs.");
+        }
+    }
+
+    // Function 12: Unfollow Friend
+    public void unfollowFriend(Long userId, Long friendId) {
+        Optional<User> user = userRepository.findById(userId);
+        Optional<User> friend = userRepository.findById(friendId);
+
+        if (user.isPresent() && friend.isPresent()) {
+        	followService.deleteFollowByUserAndFriend(user.get(), friend.get());
+        } else {
+            throw new RuntimeException("User or friend not found with the given IDs.");
+        }
+    }
+
+    
+
 //    //Function 11
 //    public static void followFriend(Long userId, Long friendId) {
 //        FollowService.followFriend(userId, friendId);
@@ -105,5 +143,6 @@ public class UserService {
 //        // Assuming you have a FollowService that handles unfollow logic
 //        FollowService.unfollowFriend(userId, friendId);
 //    }
+
 }
 
