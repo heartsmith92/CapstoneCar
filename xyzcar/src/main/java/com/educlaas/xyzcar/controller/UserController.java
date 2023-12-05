@@ -32,31 +32,41 @@ public class UserController {
     @Autowired
     private FollowService followService;
 	
+
 	@PostMapping(value = "/users")
 	public void postUser(@RequestBody User user) {
 		userService.postUser(user);
 	}
 
+
+//	@PostMapping(value = "/users")
+//	public void postUser(@RequestBody User user) {
+//		userService.postUser(user);
+//
+//	}
+	
+	
+
 	// 1. Create user 
-	@PostMapping(value = "/create/users")
+	@PostMapping(value = "/user/create")
 	public void createUser(@RequestBody UserDTO userDTO) {
 		userService.registerUser(userDTO);
 	}
 	
 	// 2. Get user details
-	@GetMapping(value = "/get/users")
+	@GetMapping(value = "/user/get")
 	public List<User> getUser(){
 		return userService.getUser();
 	}
 	
 	// 3. Get user by Id
-	@GetMapping(value = "/get/user/{userId}")
+	@GetMapping(value = "/user/get/{userId}")
 	public Optional<User> getUserByID(@PathVariable Long userId){
 		return userService.getUserByID(userId);
 	}
 	
 	// 4. Update user details by userId
-	@PutMapping(value = "/put/user/{userId}")
+	@PutMapping(value = "/user/put/{userId}")
 	public User updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
 		Optional<User> existingUser = getUserByID(userId);
 		
@@ -72,7 +82,7 @@ public class UserController {
 	}
 	
 	// 5. Update user status by userId
-	@PutMapping(value = "/put/user/status/{userId}")
+	@PutMapping(value = "/user/put/status/{userId}")
 	public User updateUserStatus(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
 		Optional<User> existingUser = getUserByID(userId);
 	    
@@ -87,22 +97,23 @@ public class UserController {
 	}
 
     // Function 8: List Followed Friends
-    @GetMapping(value = "/users/{userId}/followed-friends")
+    @GetMapping(value = "/user/followed-friends/{userId}")
     public List<User> listFollowedFriends(@PathVariable Long userId) {
         return followService.listFollowedFriends(userId);
     }
 
     // Function 9: Filter Friends by Status
-    @GetMapping(value = "/users/{userId}/friends/{status}")
+    @GetMapping(value = "user/friends/{userId}/{status}")
     public List<User> filterFriendsByStatus(@PathVariable Long userId, @PathVariable int status) {
         return followService.filterFriendsByStatus(userId, status);
     }
 
     // Function 10: Search Friends
-    @GetMapping(value = "/users/search")
+    @GetMapping(value = "/user/search")
     public List<User> searchFriends(@RequestParam String query) {
         return followService.searchFriends(query);
     }
+
 
  // Function 11: Follow Friend
     @PostMapping(value = "/users/{userId}/follow/{friendId}")
@@ -115,4 +126,17 @@ public class UserController {
     public void unfollowFriend(@PathVariable Long userId, @PathVariable Long friendId) {
         userService.unfollowFriend(userId, friendId);
     }
+
+//    // Function 11: Follow Friend
+//    @PostMapping(value = "/users/{userId}/follow/{friendId}")
+//    public void followFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+//        FollowService.followFriend(userId, friendId);
+//    }
+//
+//    // Function 12: Unfollow Friend
+//    @DeleteMapping(value = "/users/{userId}/unfollow/{friendId}")
+//    public void unfollowFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+//        followService.unfollowFriend(userId, friendId);
+//    }
+
 }

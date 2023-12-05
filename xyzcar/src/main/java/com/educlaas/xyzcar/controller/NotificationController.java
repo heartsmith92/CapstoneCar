@@ -23,6 +23,7 @@ import com.educlaas.xyzcar.entity.LikeEntity;
 import com.educlaas.xyzcar.entity.NotificationLog;
 import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.User;
+import com.educlaas.xyzcar.repository.CommunityRepository;
 import com.educlaas.xyzcar.repository.PostRepository;
 import com.educlaas.xyzcar.repository.UserRepository;
 import com.educlaas.xyzcar.service.LikeEntityService;
@@ -51,10 +52,14 @@ public class NotificationController {
     @Autowired
     private PostRepository postRepository; // Autowire PostRepository
     
+
+    @Autowired
+    private CommunityRepository communityRepository;
+
     
     
     // Function 20: Get post tabulation (likes, comments, shares)
-    @GetMapping("/get/post/tabulation/{postId}")
+    @GetMapping("/post/get/tabulation/{postId}")
     public ResponseEntity<Map<String, Long>> getPostTabulation(@PathVariable Long postId) {
 
         // Call the service method to get post tabulation
@@ -64,9 +69,10 @@ public class NotificationController {
         return new ResponseEntity<>(postTabulation, HttpStatus.OK);
     }
     
+
     
 
-    @PostMapping("/addLikesToNL/{userId}/{postId}/{targetUserId}/{notificationType}")
+    @PostMapping("/notification/add-like/{userId}/{postId}/{targetUserId}/{notificationType}")
     public ResponseEntity<NotificationLog> addLikesToNL(@PathVariable Long userId,
                                                         @PathVariable Long postId,
                                                         @PathVariable Integer targetUserId,
@@ -82,7 +88,7 @@ public class NotificationController {
         return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
     }
     
-    @PostMapping("/shareToNL/{userId}/{postId}/{targetUserId}/{notificationType}")
+    @PostMapping("/notification/share/{userId}/{postId}/{targetUserId}/{notificationType}")
     public ResponseEntity<NotificationLog> shareToNL(@PathVariable Long userId,
                                                         @PathVariable Long postId,
                                                         @PathVariable Integer targetUserId,
@@ -98,7 +104,7 @@ public class NotificationController {
         return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
     }
     
-    @PostMapping("/commentToNL/{userId}/{postId}/{targetUserId}/{notificationType}")
+    @PostMapping("/notification/comment/{userId}/{postId}/{targetUserId}/{notificationType}")
     public ResponseEntity<NotificationLog> commentToNL(@PathVariable Long userId,
                                                         @PathVariable Long postId,
                                                         @PathVariable Integer targetUserId,
@@ -110,6 +116,23 @@ public class NotificationController {
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         NotificationLog addedNotificationLog = notificationLogService.commentToNL(existingUser, existingPost, targetUserId, notificationType);
+
+        return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
+    }
+    
+    //Function 7
+    @PostMapping("/notification/member/{userId}/{communityId}/{targetUserId}/{notificationType}")
+    public ResponseEntity<NotificationLog> memberToNL(@PathVariable Long userId,
+                                                        @PathVariable Long communityId,
+                                                        @PathVariable Integer targetUserId,
+                                                        @PathVariable int notificationType) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Community existingCommunity = communityRepository.findById(communityId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        NotificationLog addedNotificationLog = notificationLogService.memberToNL(existingUser, existingCommunity, targetUserId, notificationType);
 
         return new ResponseEntity<>(addedNotificationLog, HttpStatus.CREATED);
     }
