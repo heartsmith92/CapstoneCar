@@ -201,12 +201,9 @@ public class PostController {
 	 
 	    
 	    //Function 28 list all comment
-	    @GetMapping(value = "/post/get/comment/{user}")
-	    public List<Post> getComment() {
-	        Long userId = 1L; // Replace this with the actual user ID you want to query for
-	        Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
-
-	        return CommentService.listComment(userId, status);
+	     @GetMapping(value = "/comment/get")
+	    public List<Comment> getComment() {
+	        return CommentService.getAllComments();
 		}
 }
 
