@@ -115,6 +115,11 @@ public class CommunityController {
 	
 	   }
     
+    // get all the community member details
+    @GetMapping(value = "/get/community/member")
+    public List<CommunityMember> getAllCommunityMembers(){
+		return communityMemberService.getAllCommunityMembers();
+	}
 }
 	
 	

@@ -117,7 +117,11 @@ public class PostController {
 	    }
 
 	    
+
 //Function 16
+
+	    //Add like to post 
+
 	    @PostMapping("/post/add-like/{userId}/{postId}")
 	    public ResponseEntity<LikeEntity> addLikesToPost(
 	            @PathVariable Integer userId,
