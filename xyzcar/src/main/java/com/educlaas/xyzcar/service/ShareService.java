@@ -13,6 +13,7 @@ import com.educlaas.xyzcar.entity.Share;
 import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.PostRepository;
 import com.educlaas.xyzcar.repository.ShareRepository;
+import com.educlaas.xyzcar.repository.UserRepository;
 
 @Service
 public class ShareService {
@@ -21,6 +22,9 @@ public class ShareService {
     private ShareRepository shareRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserRepository userrepository;
+    
 
     public List<Share> getAllShares() {
         return shareRepository.findAll();
@@ -42,37 +46,31 @@ public class ShareService {
         shareRepository.deleteById(id);
     }
     
-    //function 20 
+    //function 19 Share post 
     
-    public Share sharePost(Integer userId , Long postId) {
-    	if (shareRepository == null) {
-            // Log or print a message to indicate the null state
-            System.out.println("LikeRepository is null");
-            // You can use a logger instead of System.out.println
+    public Share sharePost(Long userId, Long postId) {
+        if (shareRepository == null) {
+            System.out.println("ShareRepository is null");
         }
+        
         // Step A: Retrieve the post based on postId
-    	Post post = postRepository.findById(postId)
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
-        // Retrieve the existing user associated with the provided postId
-        User existingUser = post.getUser(); // Assuming the post has a user associated with it
+        // Retrieve the user sharing the post (assuming you have a UserRepository)
+        User sharingUser = userrepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Ensure the user associated with the post exists
-        if (existingUser == null) {
-            throw new RuntimeException("User associated with the post not found");
-        }
-
-        // Step B: Create LikeEntity objects for the given PostDTO
+        // Step B: Create Share object for the given post and user
         Share share = new Share();
         share.setCreatedDate(new Date());
         share.setStatus(1);
-        share.setUser(existingUser); // Set the existing user associated with the post
+        share.setUser(sharingUser); // Set the user who is sharing the post
         share.setPost(post);
 
-        // Save the like in the database
-//        LikeEntity createdLike = likeRepository.save(like);
-        Share createShare = postRepository.save(share);
+        // Save the share in the database
+        Share createdShare = shareRepository.save(share);
 
-        return createShare; // Return the updated post
+        return createdShare; // Return the updated post
     }
 }
