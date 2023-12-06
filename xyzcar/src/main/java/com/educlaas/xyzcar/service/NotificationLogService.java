@@ -79,18 +79,11 @@ public class NotificationLogService {
         return tabulation;
         
     }
-    //Function 21 
-    public void createNotificationLog(Long userId, Long postId,Integer targetUserId) {
-    	
-    }
-    
-    
-    public List<NotificationLog> getNotificationLogsByFkUserId(Long fkUserId) {
-        // Your logic to fetch notification logs by fk_userid
-        return notificationLogRepository.findByUser_Id(fkUserId);
-    }
 
     
+    public List<NotificationLog> getNotificationLogsByFkUserIdAndPostId(Long fkUserId, Long postId) {
+        return notificationLogRepository.findByUser_IdAndPostid(fkUserId, postId);
+    }    
 
 
 

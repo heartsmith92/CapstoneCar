@@ -40,6 +40,10 @@ public class NotificationLog {
 
     @Column(name = "targetUserID")
     private Integer targetUserID;
+    
+    @Column(name = "postid")
+    private Integer postid;
+
 
 	
 	
