@@ -135,21 +135,15 @@ public class PostController {
 	    }
 	   
 	    //Function 26 Get All Likes where status =1 
-	    @GetMapping(value = "/post/get/likes/{user}")
-	    public List<Post> getlikedPosts() {
-	        Long userId = 1L; // Replace this with the actual user ID you want to query for
-	        Integer status = 1; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
-
-	        return LikeEntityService.listUserDisLikedPosts(userId, status);
+	    @GetMapping(value = "/post/likes/get")
+	    public List<LikeEntity> getlikedPosts() {
+	        return LikeEntityService.getAllLikes();
 		}
 	    
 	  //Function 27 Get All DisLikes where status=0
-	    @GetMapping(value = "/post/get/dislikes/{user}")
-	    public List<Post> getDislikedPosts() {
-	        Long userId = 1L; // Replace this with the actual user ID you want to query for
-	        Integer status = 0; // Set the status to filter disliked posts (assuming status 0 represents dislikes)
-
-	        return LikeEntityService.listUserDisLikedPosts(userId, status);
+	    @GetMapping(value = "/post/share/get")
+	    public List<Share> getSharePosts() {
+	        return ShareService.getAllShares();
 		}
 	    
 	    //GetSpecificLikes
