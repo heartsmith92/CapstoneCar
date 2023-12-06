@@ -37,11 +37,9 @@ public class Share {
 
 	    @ManyToOne
 	    @JoinColumn(name = "FK_postID")
-	    @JsonBackReference 
 	    private Post post;
 
 	    @ManyToOne
 	    @JoinColumn(name = "FK_userID")
-	    @JsonManagedReference 
 	    private User user;
 }
