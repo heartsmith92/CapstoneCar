@@ -13,6 +13,7 @@ import com.educlaas.xyzcar.dto.UserDTO;
 import com.educlaas.xyzcar.entity.Follow;
 import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.UserRepository;
+import com.educlaas.xyzcar.repository.FollowRepository;
 
 @Service
 public class UserService {
@@ -110,8 +111,9 @@ public class UserService {
 	    if (user.isPresent() && friend.isPresent()) {
 	        Follow follow = new Follow();
 	        follow.setUser(user.get());
-	        follow.setFriend(friend.get()); // Corrected line
-	        follow.setStatus(null/* set the default status or any other logic */);
+	        follow.setFriendID(friendId.intValue());
+	        follow.setCreatedDate(new Date());
+	        follow.setStatus(1);
 	        followService.createFollow(follow);
 	    } else {
 	        throw new RuntimeException("User or friend not found with the given IDs.");
@@ -119,24 +121,7 @@ public class UserService {
 	}
 
 
-//    // Function 11: Follow Friend
-//    public void followFriend(Long userId, Long friendId) {
-//        Optional<User> user = userRepository.findById(userId);
-//        Optional<User> friend = userRepository.findById(friendId);
-//
-//        if (user.isPresent() && friend.isPresent()) {
-//            Follow follow = new Follow();
-//            follow.setUser(user.get());
-//            follow.setFriendID(friend.get());
-//
-//            
-//            follow.setStatus(null/* set the default status or any other logic */);
-//            followService.createFollow(follow);
-//        } else {
-//            throw new RuntimeException("User or friend not found with the given IDs.");
-//        }
-//    }
-//	
+
 	
 
 

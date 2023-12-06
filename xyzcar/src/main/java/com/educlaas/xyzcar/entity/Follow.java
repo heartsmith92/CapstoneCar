@@ -41,4 +41,7 @@ public class Follow {
 	    @JoinColumn(name = "FK_userID")
 	    @JsonManagedReference 
 	    private User user;
+	    
+	    
+
 }

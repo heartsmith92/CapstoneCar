@@ -102,11 +102,11 @@ public class UserController {
     }
 
 
-// // Function 11: Follow Friend
-//    @PostMapping(value = "/users/{userId}/follow/{friendId}")
-//    public void followFriend(@PathVariable Long userId, @PathVariable Long friendId) {
-//        userService.followFriend(userId, friendId);
-//    }
+ // Function 11: Follow Friend
+    @PostMapping(value = "/users/{userId}/follow/{friendId}")
+    public void followFriend(@PathVariable Long userId, @PathVariable Long friendId) {
+        userService.followFriend(userId, friendId);
+    }
 
     // Function 12: Unfollow Friend
     @DeleteMapping(value = "/users/{userId}/unfollow/{friendId}")
