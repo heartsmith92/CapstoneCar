@@ -156,4 +156,12 @@ public class NotificationController {
 
         return new ResponseEntity<>(notificationLogs, HttpStatus.OK);
     }
+    
+    @GetMapping("/notification/log/get")
+    public ResponseEntity<List<NotificationLog>> getNotificationLogs() {
+        
+        List<NotificationLog> notificationLogs = notificationLogService.getAllNotificationLogs();
+        return new ResponseEntity<>(notificationLogs, HttpStatus.OK);
+    }
+
 }
