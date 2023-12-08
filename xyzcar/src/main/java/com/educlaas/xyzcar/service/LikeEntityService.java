@@ -20,139 +20,162 @@ import com.educlaas.xyzcar.repository.UserRepository;
 @Service
 public class LikeEntityService {
 
-    @Autowired
-    private LikeRepository likeRepository;
-    @Autowired
-    private PostRepository postRepository;
- 
+  @Autowired
+  private LikeRepository likeRepository;
+  @Autowired
+  private PostRepository postRepository;
+  @Autowired
+  private UserRepository userRepository;
+
+  public void postdislike(LikeEntity likeEntity) {
+    likeRepository.save(likeEntity);
+  }
+
+  public List < LikeEntity > getAllLikes() {
+    return likeRepository.findAll();
+  }
+
+  public List < LikeEntity > getAllDisLikes() {
+    return likeRepository.findAll();
+  }
+
+  public Optional < LikeEntity > getLikeById(Long id) {
+    return likeRepository.findById(id);
+  }
+
+  //Function 17
+  public LikeEntity createLike(LikeEntity likeEntity) {
+    return likeRepository.save(likeEntity);
+  }
+
+  public LikeEntity updateLike(LikeEntity likeEntity) {
+    return likeRepository.save(likeEntity);
+  }
+
+  public void deleteLike(Long id) {
+    likeRepository.deleteById(id);
+  }
+  
+  public LikeEntity addLikesToPost(Long userId, Long postId) {
+	    // Retrieve the post based on the provided postId
+	    Post post = postRepository.findById(postId)
+	            .orElseThrow(() -> new RuntimeException("Post not found"));
+
+	    // Retrieve the user based on the provided userId
+	    User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
+
+	    // Try finding the existing like for the user and post
+	    LikeEntity existingLike = likeRepository.findByUserAndPost(user, post);
+
+	    if (existingLike != null) {
+	        // If an existing like is found, update its status to 1 (liked)
+	        existingLike.setStatus(1);
+
+	        // Save the updated like in the database
+	        return likeRepository.save(existingLike);
+	    } else {
+	        // If no existing like is found, create a new like
+	        LikeEntity newLike = new LikeEntity();
+	        newLike.setCreatedDate(new Date());
+	        newLike.setStatus(1);
+	        newLike.setUser(user);
+	        newLike.setPost(post);
+
+	        // Save the new like in the database
+	        return likeRepository.save(newLike);
+	    }
+	}
 
 
-    
-    
-    public  void postdislike(LikeEntity likeEntity) {
-    	likeRepository.save(likeEntity);
+  //Function 18
+  public LikeEntity addDisLikesToPost(Long userId, Long postId) {
+	// Retrieve the post based on the provided postId
+	    Post post = postRepository.findById(postId)
+	            .orElseThrow(() -> new RuntimeException("Post not found"));
+
+	    // Retrieve the user based on the provided userId
+	    User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
+
+	    // Try finding the existing like for the user and post
+	    LikeEntity existingLike = likeRepository.findByUserAndPost(user, post);
+
+    if (existingLike != null) {
+      // If an existing like is found, change its status to 0 (disliked)
+      existingLike.setStatus(0);
+      existingLike.setCreatedDate(new Date()); // Update the date or leave as is
+
+      // Save the updated like in the database
+      return likeRepository.save(existingLike);
+    } else {
+      // If no existing like is found, create a new dislike
+      LikeEntity dislike = new LikeEntity();
+      dislike.setCreatedDate(new Date());
+      dislike.setStatus(0);
+      dislike.setUser(user); // Set the existing user associated with the post
+      dislike.setPost(post);
+
+      // Save the new dislike in the database
+      return likeRepository.save(dislike);
     }
+  }
 
-    public List<LikeEntity> getAllLikes() {
-        return likeRepository.findAll();
-    }
-    
-    public List<LikeEntity> getAllDisLikes() {
-        return likeRepository.findAll();
-    }
+  //Function 26 
+  public List < Post > listUserLikedPosts(Long userId, Integer status) {
+    return likeRepository.findAllLikedPostsByUserIdAndStatus(userId, status);
+  }
 
-    public Optional<LikeEntity> getLikeById(Long id) {
-        return likeRepository.findById(id);
-    }
+  //Function 28 
 
-    //Function 17
-    public LikeEntity createLike(LikeEntity likeEntity) {
-        return likeRepository.save(likeEntity);
-    }
+  public void listUserDislikedPosts(Long userId) {}
 
-    public LikeEntity updateLike(LikeEntity likeEntity) {
-        return likeRepository.save(likeEntity);
-    }
+  //Function 27 
 
-    public void deleteLike(Long id) {
-    	likeRepository.deleteById(id);
-    }
-    public LikeEntity addLikesToPost(Integer userId, Long postId) {
-    	
-    	if (likeRepository == null) {
-            // Log or print a message to indicate the null state
-            System.out.println("LikeRepository is null");
-            // You can use a logger instead of System.out.println
-        }
-        // Step A: Retrieve the post based on postId
-    	Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+  public List < Post > listUserDisLikedPosts(Long userId, Integer status) {
+    return likeRepository.findAllDisLikedPostsByUserIdAndStatus(userId, status);
 
-        // Retrieve the existing user associated with the provided postId
-        User existingUser = post.getUser(); // Assuming the post has a user associated with it
+  }
 
-        // Ensure the user associated with the post exists
-        if (existingUser == null) {
-            throw new RuntimeException("User associated with the post not found");
-        }
+  // Update like 
+  public LikeEntity save(LikeEntity updateLike) {
+    return likeRepository.save(updateLike);
+  }
 
-        // Step B: Create LikeEntity objects for the given PostDTO
-        LikeEntity like = new LikeEntity();
-        like.setCreatedDate(new Date());
-        like.setStatus(1);
-        like.setUser(existingUser); // Set the existing user associated with the post
-        like.setPost(post);
+  public Optional < LikeEntity > findByUser_Id(Long id) {
+    return likeRepository.findByUser_Id(id);
+  }
+  
+  public Optional<LikeEntity> findByUserAndPost(Long userId, Long postId) {
+	    // Retrieve the post based on the provided postId
+	    Post post = postRepository.findById(postId)
+	            .orElseThrow(() -> new RuntimeException("Post not found"));
 
-        // Save the like in the database
-//        LikeEntity createdLike = likeRepository.save(like);
-        LikeEntity createdLike = postRepository.save(like);
+	    // Retrieve the user based on the provided userId
+	    User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return createdLike; // Return the updated post
-    }
+	    // Try finding the existing like for the user and post
+	    LikeEntity existingLike = likeRepository.findByUserAndPost(user, post);
 
-    
-    
-    //Function 18
-    public LikeEntity addDisLikesToPost(Integer userId, Long postId) {
-        if (likeRepository == null) {
-            // Log or print a message to indicate the null state
-            System.out.println("LikeRepository is null");
-            // You can use a logger instead of System.out.println
-        }
+	    // Wrap the existingLike in an Optional and return
+	    return Optional.ofNullable(existingLike);
+	}
 
-        // Step A: Retrieve the post based on postId
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+  
+  public Optional<LikeEntity> findLikeByUserAndPost(Long userId, Long postId) {
+	// Retrieve the post based on the provided postId
+	    Post post = postRepository.findById(postId)
+	            .orElseThrow(() -> new RuntimeException("Post not found"));
 
-        // Retrieve the existing user associated with the provided postId
-        User existingUser = post.getUser(); // Assuming the post has a user associated with it
+	    // Retrieve the user based on the provided userId
+	    User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Ensure the user associated with the post exists
-        if (existingUser == null) {
-            throw new RuntimeException("User associated with the post not found");
-        }
+	    // Try finding the existing like for the user and post
+	    LikeEntity existingLike = likeRepository.findByUserAndPost(user, post);
 
-        // Step B: Check if there is an existing like for this user and post
-        LikeEntity existingLike = likeRepository.findByUserAndPost(existingUser, post);
-
-        if (existingLike != null) {
-            // If an existing like is found, change its status to 0 (disliked)
-            existingLike.setStatus(0);
-            existingLike.setCreatedDate(new Date()); // Update the date or leave as is
-
-            // Save the updated like in the database
-            return likeRepository.save(existingLike);
-        } else {
-            // If no existing like is found, create a new dislike
-            LikeEntity dislike = new LikeEntity();
-            dislike.setCreatedDate(new Date());
-            dislike.setStatus(0);
-            dislike.setUser(existingUser); // Set the existing user associated with the post
-            dislike.setPost(post);
-
-            // Save the new dislike in the database
-            return likeRepository.save(dislike);
-        }
-    }
-
-    
-    //Function 26 
-    public List<Post> listUserLikedPosts(Long userId, Integer status) {
-        return likeRepository.findAllLikedPostsByUserIdAndStatus(userId, status);
-    }
-    
-
-    //Function 28 
-    
-    public void listUserDislikedPosts(Long userId) {}
-    
-    
-
-    //Function 27 
-    
-    public List<Post> listUserDisLikedPosts(Long userId, Integer status) {
-        return likeRepository.findAllDisLikedPostsByUserIdAndStatus(userId, status);
-
+	    // Wrap the existingLike in an Optional and return
+	    return Optional.ofNullable(existingLike);
+	}
 }
-}
-
