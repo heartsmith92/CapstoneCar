@@ -44,7 +44,9 @@ public class NotificationLog {
     @Column(name = "postid")
     private Integer postid;
 
-
+    @ManyToOne
+    @JoinColumn(name = "FK_postID")
+    private Post post;
 	
 	
 }
