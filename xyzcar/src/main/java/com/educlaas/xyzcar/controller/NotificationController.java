@@ -147,4 +147,20 @@ public class NotificationController {
 
         return new ResponseEntity<>(notificationLogs, HttpStatus.OK);
     }
+    
+    @GetMapping("/notification/log/get/{fkUserId}")
+    public ResponseEntity<List<NotificationLog>> getNotificationLogsByFkUserId(
+            @PathVariable Long fkUserId) {
+        
+        List<NotificationLog> notificationLogs = notificationLogService.getNotificationLogsByFkUserId(fkUserId);
+
+        return new ResponseEntity<>(notificationLogs, HttpStatus.OK);
+    }
+    
+    @GetMapping("/notification/log/get")
+    public ResponseEntity<List<NotificationLog>> getNotificationLogs() {
+        
+        List<NotificationLog> notificationLogs = notificationLogService.getAllNotificationLogs();
+        return new ResponseEntity<>(notificationLogs, HttpStatus.OK);
+    }
 }
