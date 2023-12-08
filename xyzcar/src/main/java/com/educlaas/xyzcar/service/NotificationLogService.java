@@ -95,6 +95,7 @@ public class NotificationLogService {
         NotificationLog notificationLog = new NotificationLog();
         notificationLog.setCreatedDate(new Date());
         notificationLog.setUser(user);
+        notificationLog.setPost(post);
         notificationLog.setTargetUserID(targetUserId);
         
         // Set notification type based on the action (like = 0, dislike = 1)
@@ -119,6 +120,7 @@ public class NotificationLogService {
         NotificationLog notificationLog = new NotificationLog();
         notificationLog.setCreatedDate(new Date());
         notificationLog.setUser(user);
+        notificationLog.setPost(post);
         notificationLog.setTargetUserID(targetUserId);
         
         // Set notification type based on the action (3=share)
@@ -143,6 +145,7 @@ public class NotificationLogService {
         NotificationLog notificationLog = new NotificationLog();
         notificationLog.setCreatedDate(new Date());
         notificationLog.setUser(user);
+        notificationLog.setPost(post);
         notificationLog.setTargetUserID(targetUserId);
         
         // Set notification type based on the action (2=comments)
@@ -182,6 +185,12 @@ public class NotificationLogService {
 
         return addedNotificationLog;
     
+    }
+    
+    
+    //    findByUserId
+    public List<NotificationLog> getNotificationLogsByFkUserId(Long fkUserId) {
+        return notificationLogRepository.findByUserId(fkUserId);
     }
 }
     
