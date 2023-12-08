@@ -65,7 +65,6 @@ public class Post {
 	    private List<Comment> comments;
 
 	    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-	    @JsonBackReference 
 	    private List<LikeEntity> likes;
 
 	    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)

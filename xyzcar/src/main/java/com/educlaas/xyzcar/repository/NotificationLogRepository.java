@@ -19,4 +19,7 @@ public interface NotificationLogRepository extends JpaRepository<NotificationLog
     
     @Query("SELECT nl FROM NotificationLog nl WHERE nl.user.id = :userId AND nl.postid = :postId")
     List<NotificationLog> findByUser_IdAndPostid(@Param("userId") Long userId, @Param("postId") Long postId);
+    
+    @Query("SELECT nl FROM NotificationLog nl WHERE nl.user.id = :userId")
+    List<NotificationLog> findByUserId(@Param("userId") Long userId);
 }

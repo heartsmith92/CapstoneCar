@@ -163,4 +163,5 @@ public class NotificationController {
         List<NotificationLog> notificationLogs = notificationLogService.getAllNotificationLogs();
         return new ResponseEntity<>(notificationLogs, HttpStatus.OK);
     }
+
 }
