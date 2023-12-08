@@ -6,23 +6,17 @@ public class AuthResponse {
     private String firstName;
     private String lastName;
     private String token;
-    private String profileImage;
+    private String profileImgPath;
 
-    public String getProfileImage() {
-		return profileImage;
-	}
+    
 
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
-
-	public AuthResponse(Long id, String email, String firstName, String lastName, String token, String profileImage) {
+	public AuthResponse(Long id, String email, String firstName, String lastName, String token, String profileImgPath) {
 		this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.token = token;
-        this.profileImage = profileImage;
+        this.profileImgPath = profileImgPath;
     }
 	
 	public Long getId() {
@@ -64,7 +58,14 @@ public class AuthResponse {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
+	public String getProfileImgPath() {
+		return profileImgPath;
+	}
 
+	public void setProfileImgPath(String profileImgPath) {
+		this.profileImgPath = profileImgPath;
+	}
     // Getters and setters for the fields
 }
 
