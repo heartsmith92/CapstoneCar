@@ -34,6 +34,9 @@ public class User {
 
     @Column(name = "userType", length = 20)
     private String userType;
+    
+    @Column(name = "notificationStatus", length = 20)
+    private Integer notificationStatus;
 
     @Column(name = "createdDate")
     @Temporal(TemporalType.TIMESTAMP)

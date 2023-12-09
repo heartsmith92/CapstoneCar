@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educlaas.xyzcar.dto.UserDTO;
+import com.educlaas.xyzcar.entity.Follow;
 import com.educlaas.xyzcar.entity.User;
+import com.educlaas.xyzcar.repository.FollowRepository;
 import com.educlaas.xyzcar.service.FollowService;
 import com.educlaas.xyzcar.service.UserService;
 
@@ -31,6 +33,9 @@ public class UserController {
 
     @Autowired
     private FollowService followService;
+    
+    @Autowired
+    private FollowRepository followRepository;
 	
 
 
@@ -82,6 +87,20 @@ public class UserController {
 	        throw new RuntimeException("User not found with ID: " + userId);
 	    }
 	}
+	
+	@PutMapping(value = "/user/put/notification/status/{userId}")
+	public User updateUserNotificationStatus(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+		Optional<User> existingUser = getUserByID(userId);
+	    
+	    if (existingUser.isPresent()) {
+	        User updateUser = existingUser.get();
+	        
+	        updateUser.setNotificationStatus(userDTO.getNotificationStatus());
+	        return userService.save(updateUser);
+	    } else {
+	        throw new RuntimeException("User not found with ID: " + userId);
+	    }
+	}
 
     // Function 8: List Followed Friends
     @GetMapping(value = "/user/followed-friends/{userId}")
@@ -109,11 +128,28 @@ public class UserController {
     }
 
     // Function 12: Unfollow Friend
-    @DeleteMapping(value = "/users/{userId}/unfollow/{friendId}")
+    @PostMapping(value = "/users/{userId}/unfollow/{friendId}")
     public void unfollowFriend(@PathVariable Long userId, @PathVariable Long friendId) {
         userService.unfollowFriend(userId, friendId);
     }
+    
+    // Get all the follow list
+    @GetMapping(value = "/follow/get")
+	public List<Follow> getFollowList(){
+		return followService.getAllFollows();
+	}
 
+    @PutMapping(value = "/user/{userId}/unfollow/{friendId}")
+	public Follow updateUser(@PathVariable Long userId, @PathVariable Long friendId) {
+		Optional<Follow> existingFollow = followRepository.findExistUserAndFollowed(userId, friendId);
+		
+		Follow updateFollow = existingFollow.get();
+		
+		updateFollow.setStatus(0);
+		
+		
+		return followService.updateFollow(updateFollow);
+	}
 
 
 }
