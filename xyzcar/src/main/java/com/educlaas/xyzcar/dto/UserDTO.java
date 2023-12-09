@@ -14,6 +14,7 @@ public class UserDTO {
 	    private String email;
 	    private Date createdDate;
 	    private String userType;
+	    private Integer notificationStatus;
 	    private String userBio;
 	    private Integer status;
 	    private String profileImgPath;

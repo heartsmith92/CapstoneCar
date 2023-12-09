@@ -31,6 +31,8 @@ public class UserService {
     @Autowired
     private FollowService followService;  
 
+    @Autowired
+    private FollowRepository followRepository;
     
 
     
@@ -107,6 +109,7 @@ public class UserService {
 	public void followFriend(Long userId, Long friendId) {
 	    Optional<User> user = userRepository.findById(userId);
 	    Optional<User> friend = userRepository.findById(friendId);
+	    
 
 	    if (user.isPresent() && friend.isPresent()) {
 	        Follow follow = new Follow();
