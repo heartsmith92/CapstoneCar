@@ -68,6 +68,7 @@ public class UserController {
 		updateUser.setFirstName(userDTO.getFirstName());
 		updateUser.setLastName(userDTO.getLastName());
 		updateUser.setUserBio(userDTO.getUserBio());
+		updateUser.setUserType(userDTO.getUserType());
 		updateUser.setProfileImgPath(userDTO.getProfileImgPath());
 		
 		return userService.save(updateUser);
