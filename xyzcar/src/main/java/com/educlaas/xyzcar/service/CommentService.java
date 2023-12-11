@@ -14,6 +14,7 @@ import com.educlaas.xyzcar.entity.Post;
 import com.educlaas.xyzcar.entity.User;
 import com.educlaas.xyzcar.repository.CommentRepository;
 import com.educlaas.xyzcar.repository.PostRepository;
+import com.educlaas.xyzcar.repository.UserRepository;
 
 @Service
 public class CommentService {
@@ -22,6 +23,8 @@ public class CommentService {
     private CommentRepository commentRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Comment> getAllComments() {
         return commentRepository.findAll();
@@ -47,7 +50,7 @@ public class CommentService {
         
     }
     //Function 18
-    public Comment commentOnPost(Integer userId, Long postId,String commentText){
+    public Comment commentOnPost(Long userId, Long postId,String commentText){
     	if (commentRepository == null) {
             // Log or print a message to indicate the null state
             System.out.println("CommentRepository is null");
@@ -57,20 +60,15 @@ public class CommentService {
     	Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
-        // Retrieve the existing user associated with the provided postId
-        User existingUser = post.getUser(); // Assuming the post has a user associated with it
-
-        // Ensure the user associated with the post exists
-        if (existingUser == null) {
-            throw new RuntimeException("User associated with the post not found");
-        }
+        User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Step B: Create LikeEntity objects for the given PostDTO
         Comment comment = new Comment();
         comment.setCreatedDate(new Date());
         comment.setStatus(1);
         comment.setComment(commentText);
-        comment.setUser(existingUser); // Set the existing user associated with the post
+        comment.setUser(user); // Set the existing user associated with the post
         comment.setPost(post);
 
         // Save the like in the database
