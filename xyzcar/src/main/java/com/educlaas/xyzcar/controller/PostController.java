@@ -175,7 +175,7 @@ public class PostController {
   //Function 18 Share add to table 
   @PostMapping("post/comment/{userId}/{postId}/{commentText}")
   public ResponseEntity < Comment > comment(
-    @PathVariable Integer userId,
+    @PathVariable Long userId,
     @PathVariable Long postId,
     @PathVariable String commentText) {
 
